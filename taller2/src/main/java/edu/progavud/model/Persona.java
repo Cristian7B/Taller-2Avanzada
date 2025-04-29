@@ -4,6 +4,8 @@
  */
 package edu.progavud.model;
 
+import java.util.ArrayList;
+
 import edu.progavud.controller.ControlPersona;
 
 /**
@@ -29,11 +31,8 @@ public abstract class Persona {
      * Número entero que representa el dinero que tiene cada persona
      */
     private int dinero;
-    /**
-     * Vector de 11 enteros (maxima cantidad de cartas que podrian formar 21),
-     * cada posición del vector representa el valor de la carta
-     */
-    private int[] cartas;
+
+    private ArrayList<Carta> Mano;
     /**
      * Método constructor de la clase que solamente inicializa los atributos
      */
@@ -42,7 +41,6 @@ public abstract class Persona {
         apellido = "";
         cedula = "";
         dinero = 0;
-        cartas = new int[11];
     }
     
     /**
@@ -56,12 +54,12 @@ public abstract class Persona {
     * @param numCarta La posición del vector de cartas,
     * es decir en que orden le salió la carta a la persona.
     */
-    public Persona(String nombre, String apellido, String cedula, int dinero, int carta, int numCarta){
+    public Persona(String nombre, String apellido, String cedula, int dinero){
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
         this.dinero = dinero;
-        this.cartas[numCarta] = carta;
+
     }
     
     /**
@@ -80,16 +78,6 @@ public abstract class Persona {
      * @return valor de la carta que recibió
      */
     public abstract int pedirCarta();
-    
-    /**
-     * Método que retorna el nombre del ganador de la ronda
-     * 
-     * @return nombre del ganador de la ronda
-     */
-    public String hallarGanador(){
-        String ganador;
-        ganador = "";
-        return ganador;
-    }
+   
     
 }
