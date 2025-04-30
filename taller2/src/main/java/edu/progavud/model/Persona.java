@@ -106,4 +106,22 @@ public abstract class Persona {
     public void setDinero(int dinero) {
         this.dinero = dinero;
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
+    }
+
+    public void setMano(ArrayList<Carta> Mano) {
+        
+        this.Mano = Mano;
+    }
+    
 }

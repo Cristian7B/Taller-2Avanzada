@@ -14,6 +14,9 @@ import java.util.Collections;
  * @author Nicolas Velasco
  */
 public class ControlMazo {
+    //como Persona no se puede incluir dentro de este Control
+    //por SOLID, el método creado generarMano se usará
+    //para asignar la mano a los jugadores dentro de ControlPrincipal
     /**
      * Arreglo de objetos Carta para crear el mazo revuelto
      */
@@ -63,4 +66,22 @@ public class ControlMazo {
         this.mazoRevuelto = mazoRevuelto;
     }
     
+    /**
+     * Método que genera la mano en cada ronda, en la primera ronda
+     * le da una carta a los dos jugadores y una al crupier y así sucesivamente en cada ronda, 
+     * este método únicamente genera la mano inicial de las partidas, no sirve
+     * para pedir cartas.
+     * @param ronda ronda de repartición de la mano inicial, 
+     *              jamás existirán dos rondas con el mismo número
+     * @return un arreglo de Cartas de dos posiciones, la primera
+     *         posición es para el primer jugador, la segunda posición
+     *         para el segundo jugador.
+     */
+    public ArrayList<Carta> generarMano(int ronda){
+        ArrayList<Carta> mano = new ArrayList<>();
+        mano.add(mazoRevuelto.get((ronda*3)-2)); //jugador 1
+        mano.add(mazoRevuelto.get((ronda*3)-1)); //jugador 2
+        mano.add(mazoRevuelto.get(ronda*3)); //crupier
+        return mano;    
+    }
 }
