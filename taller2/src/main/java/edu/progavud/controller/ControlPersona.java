@@ -19,9 +19,19 @@ public class ControlPersona {
      * objeto.
      */
     private ControlPrincipal controlPrincipal;
+    /**
+     * Atributo que contiene la ronda de juego.
+     */
     private Persona[] mesa;
+    /**
+     * Forma de comprobar quien esta apostando en el momento.
+     */
     private static int contador;
 
+    /**
+     * Metodo constructor 
+     * @param controlPrincipal
+     */
     public ControlPersona(ControlPrincipal controlPrincipal) {
         this.controlPrincipal = controlPrincipal;
     }
@@ -38,66 +48,16 @@ public class ControlPersona {
     }
 
 
-    public void colocarApuestas(int apuesta ) {
-        contador = 0;
-        if(contador%2 == 0 && ){
+    public int colocarApuestas(int apuesta ) {
+        int apuestas = 0;
+        contador = 0;   //En la mesa, una forma de elegir el jugador que coloca la apuesta
+        if(contador%2 == 0 && mesa[1].getDinero()>apuesta){
+            apuestas = apuesta;
         }
-    }
-
-    /**
-     * Método heredado de la clase Persona, dobla el valor de la
-     * apuesta pero solo recibe una carta
-     */
-    public void doblar() {
-
-    }
-
-    /**
-     * Método heredado de la clase Persona,si tiene el mismo
-     * valor en las dos cartas primeras, puede dividir sus cartas
-     * en dos manos y generar otra apuesta con la nueva mano
-     */
-    public void dividir() {
-
-    }
-
-    /**
-     * Método heredado de la clase Persona, puede asegurar
-     * apostando a que le salga blackjack al crupier,
-     * si su primera carta es un as. se paga 2 a 1.
-     * Se puede apostar como maximo, la mitad de lo que aposto
-     * en la apuesta inicial.
-     */
-    public void asegurar() {
-
-    }
-
-    /**
-     * Método heredado de la clase Persona, se paga
-     * 3 a 2, si en las primeras dos cartas le sale blackjack,
-     * es decir que suman 21.
-     */
-    public void blackjack() {
-
-    }
-
-    /**
-     * Método heredado de la clase Persona, el jugador se
-     * planta cuando crea que no necesita mas cartas.
-     */
-    public void plantarse() {
-
-    }
-
-    /**
-     * Método que retorna el ganador de cada ronda
-     * 
-     * @return cadena con el nombre del ganador de la ronda
-     */
-    public String hallarGanador() {
-        String ganador;
-        ganador = "";
-        return ganador;
+        else if(contador%2 ==1 && mesa[2].getDinero()>apuesta){
+            apuestas = apuesta;
+        }
+        return apuestas;
     }
 
 }

@@ -35,6 +35,10 @@ public abstract class Persona {
      * Arreglo de cartas que posee la persona durante el juego.
      */
     private ArrayList<Carta> Mano;
+    /**
+     * Forma de saber si la persona gano el juego.
+     */
+    private boolean isGanador;
 
     /**
      * Método constructor de la clase que solamente inicializa los atributos
@@ -44,6 +48,7 @@ public abstract class Persona {
         apellido = "";
         cedula = "";
         dinero = 0;
+        isGanador = false;
     }
 
     /**
@@ -63,7 +68,7 @@ public abstract class Persona {
         this.apellido = apellido;
         this.cedula = cedula;
         this.dinero = dinero;
-
+        isGanador = false;
     }
 
     /**
@@ -124,4 +129,13 @@ public abstract class Persona {
         this.Mano = Mano;
     }
     
+
+    public boolean isGanador() {
+        return isGanador;
+    }
+
+    public void setGanador(boolean isGanador) {
+        this.isGanador = isGanador;
+    }
+
 }
