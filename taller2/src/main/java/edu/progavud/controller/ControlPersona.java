@@ -11,7 +11,7 @@ import edu.progavud.model.Persona;
 /**
  * Clase que controla los objetos de tipo Persona
  * 
- * @author ACER NITRO
+ * @author Nicolas Velasco
  */
 public class ControlPersona {
     /**
