@@ -34,7 +34,7 @@ public abstract class Persona {
     /**
      * Arreglo de cartas que posee la persona durante el juego.
      */
-    private ArrayList<Carta> Mano;
+    private ArrayList<Carta> mano;
     /**
      * Forma de saber si la persona gano el juego.
      */
@@ -48,7 +48,9 @@ public abstract class Persona {
         apellido = "";
         cedula = "";
         dinero = 0;
+        mano = new ArrayList<>();
         isGanador = false;
+        
     }
 
     /**
@@ -101,7 +103,7 @@ public abstract class Persona {
     }
 
     public ArrayList<Carta> getMano() {
-        return Mano;
+        return mano;
     }
 
     public int getDinero() {
@@ -124,9 +126,9 @@ public abstract class Persona {
         this.cedula = cedula;
     }
 
-    public void setMano(ArrayList<Carta> Mano) {
+    public void setMano(ArrayList<Carta> mano) {
         
-        this.Mano = Mano;
+        this.mano = mano;
     }
     
 

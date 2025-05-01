@@ -7,6 +7,7 @@ package edu.progavud.controller;
 import edu.progavud.model.Carta;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 /**
  * En esta clase se revolverá el mazo para crear un
@@ -21,11 +22,15 @@ public class ControlMazo {
      * Arreglo de objetos Carta para crear el mazo revuelto
      */
     private ArrayList<Carta> mazoRevuelto;
-    
+    /**
+     * Objeto que establece la comunicación con controlPrincipal
+     */
+    private ControlPrincipal controlPrincipal;
     /**
      * Método constructor de la clase que asigna el mazo revuelto
      */
-    public ControlMazo(){
+    public ControlMazo(ControlPrincipal controlPrincipal){
+        this.controlPrincipal = controlPrincipal;
         mazoRevuelto = revolverMazo();
     }
     
@@ -83,5 +88,12 @@ public class ControlMazo {
         mano.add(mazoRevuelto.get((ronda*3)-1)); //jugador 2
         mano.add(mazoRevuelto.get(ronda*3)); //crupier
         return mano;    
+    }
+    public Carta getRandomCarta(){
+        Carta carta;
+        Random ran = new Random();
+        int numero = ran.nextInt(52);
+        carta = mazoRevuelto.get(numero);
+        return carta;
     }
 }

@@ -1,13 +1,21 @@
 package edu.progavud.view;
 
+import edu.progavud.controller.ControlVista;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 public class VentanaJuego extends javax.swing.JFrame {
 
+    /**
+     * Objeto label del tiempo
+     */
     private JLabel labelTiempo;
+    /**
+     * Variable entera para calcular los segundos
+     */
     private int segundos = 0;
+
     private Timer timer;
     
     private int fichasApostadas = 0;
@@ -15,8 +23,18 @@ public class VentanaJuego extends javax.swing.JFrame {
 
     private JLabel labelFichas;
     private JLabel labelDinero;
+    
+    public JButton btnHit;
+    public JButton btnDouble;
+    public JButton btnStay;
+    public JButton btnSplit;
+    /**
+     * Objeto para establecer la comunicación y su control
+     */
+    private ControlVista controlVista;
 
-    public VentanaJuego() {
+    public VentanaJuego(ControlVista controlVista) {
+        this.controlVista = controlVista;
         initComponents();
         iniciarTemporizador();
     }
@@ -42,7 +60,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         Color colorFondoBoton = new Color(0xAB3428);
         Color colorTexto = new Color(0xF5EE9E);
 
-        JButton btnHit = new JButton("Hit");
+        btnHit = new JButton("Hit");
         btnHit.setBackground(colorFondoBoton);
         btnHit.setForeground(colorTexto);
         btnHit.setFont(fuenteBoton);
@@ -50,7 +68,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnHit.setFocusPainted(false);
         btnHit.setBorder(null);
 
-        JButton btnDouble = new JButton("Double");
+        btnDouble = new JButton("Double");
         btnDouble.setBackground(colorFondoBoton);
         btnDouble.setForeground(colorTexto);
         btnDouble.setFont(fuenteBoton);
@@ -58,7 +76,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnDouble.setFocusPainted(false);
         btnDouble.setBorder(null);
 
-        JButton btnStay = new JButton("Stay");
+        btnStay = new JButton("Stay");
         btnStay.setBackground(colorFondoBoton);
         btnStay.setForeground(colorTexto);
         btnStay.setFont(fuenteBoton);
@@ -66,7 +84,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnStay.setFocusPainted(false);
         btnStay.setBorder(null);
 
-        JButton btnSplit = new JButton("Split");
+        btnSplit = new JButton("Split");
         btnSplit.setBackground(colorFondoBoton);
         btnSplit.setForeground(colorTexto);
         btnSplit.setFont(fuenteBoton);
@@ -131,9 +149,104 @@ public class VentanaJuego extends javax.swing.JFrame {
         timer.start();
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new VentanaJuego().setVisible(true));
+    public JLabel getLabelTiempo() {
+        return labelTiempo;
     }
+
+    public void setLabelTiempo(JLabel labelTiempo) {
+        this.labelTiempo = labelTiempo;
+    }
+
+    public int getSegundos() {
+        return segundos;
+    }
+
+    public void setSegundos(int segundos) {
+        this.segundos = segundos;
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
+    }
+
+    public int getFichasApostadas() {
+        return fichasApostadas;
+    }
+
+    public void setFichasApostadas(int fichasApostadas) {
+        this.fichasApostadas = fichasApostadas;
+    }
+
+    public int getDineroJugador() {
+        return dineroJugador;
+    }
+
+    public void setDineroJugador(int dineroJugador) {
+        this.dineroJugador = dineroJugador;
+    }
+
+    public JLabel getLabelFichas() {
+        return labelFichas;
+    }
+
+    public void setLabelFichas(JLabel labelFichas) {
+        this.labelFichas = labelFichas;
+    }
+
+    public JLabel getLabelDinero() {
+        return labelDinero;
+    }
+
+    public void setLabelDinero(JLabel labelDinero) {
+        this.labelDinero = labelDinero;
+    }
+
+    public ControlVista getControlVista() {
+        return controlVista;
+    }
+
+    public void setControlVista(ControlVista controlVista) {
+        this.controlVista = controlVista;
+    }
+
+    public JButton getBtnHit() {
+        return btnHit;
+    }
+
+    public void setBtnHit(JButton btnHit) {
+        this.btnHit = btnHit;
+    }
+
+    public JButton getBtnDouble() {
+        return btnDouble;
+    }
+
+    public void setBtnDouble(JButton btnDouble) {
+        this.btnDouble = btnDouble;
+    }
+
+    public JButton getBtnStay() {
+        return btnStay;
+    }
+
+    public void setBtnStay(JButton btnStay) {
+        this.btnStay = btnStay;
+    }
+
+    public JButton getBtnSplit() {
+        return btnSplit;
+    }
+
+    public void setBtnSplit(JButton btnSplit) {
+        this.btnSplit = btnSplit;
+    }
+    
+    
+
 }
 
 
