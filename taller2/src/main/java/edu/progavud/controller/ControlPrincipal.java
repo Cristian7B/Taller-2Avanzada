@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Clase encargada de controlar todo el resto de controles,
  * enlaza todo el programa.
  * 
- * @author ACER NITRO
+ * @author Nicolas Velasco 
  */
 public class ControlPrincipal {
     /**

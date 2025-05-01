@@ -70,6 +70,7 @@ public abstract class Persona {
         this.apellido = apellido;
         this.cedula = cedula;
         this.dinero = dinero;
+        this.mano = new ArrayList<>();
         isGanador = false;
     }
 
@@ -89,7 +90,16 @@ public abstract class Persona {
      * @return valor de la carta que recibió
      */
     public abstract int pedirCarta();
-
+    
+    /**
+     * Método que mostrara si un jugador es ganador de la partida
+     * o no, devolviendo un true si es ganador y un false sino.
+     * @return booleano de ganador.
+     */
+    public boolean isGanador() {
+        return isGanador;
+    }
+    
     public String getNombre() {
         return nombre;
     }
@@ -129,11 +139,6 @@ public abstract class Persona {
     public void setMano(ArrayList<Carta> mano) {
         
         this.mano = mano;
-    }
-    
-
-    public boolean isGanador() {
-        return isGanador;
     }
 
     public void setGanador(boolean isGanador) {

@@ -24,12 +24,14 @@ public class ControlPersona {
      * Atributo que contiene la ronda de juego.
      */
     private Persona[] mesa;
+    
     /**
      * Forma de comprobar quien esta apostando en el momento.
      * es decir, número de jugador.
      * Este contador jamás sera 0.
      */
     private static int contador;
+    
 
     /**
      * Metodo constructor 
