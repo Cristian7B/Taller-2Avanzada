@@ -4,6 +4,8 @@
  */
 package edu.progavud.model;
 
+import java.util.ArrayList;
+
 /**
  * Esta clase representa el crupier del blackjack, hereda de la clase Persona.
  * 
@@ -42,6 +44,23 @@ public class Crupier extends Persona {
         String anuncio;
         anuncio = "";   
         return anuncio;
+    }
+    
+    /**
+     * Método para dividir la mano del jugador. Instancia el atributo manoDividida
+     * y crea 2 arrayList los cuales son agregados para dividir la mano
+     */
+    public void dividirMano() {
+        manoDividida = new ArrayList<>();
+        
+        ArrayList<Carta> manoDivivida1 = new ArrayList<>();
+        ArrayList<Carta> manoDivivida2 = new ArrayList<>();
+        
+        manoDivivida1.add(getMano().get(0));
+        manoDivivida2.add(getMano().get(1));
+        
+        getManoDividida().add(manoDivivida1);
+        getManoDividida().add(manoDivivida2);
     }
             
 }

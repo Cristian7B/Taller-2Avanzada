@@ -20,16 +20,6 @@ public class ControlPersona {
      * objeto.
      */
     private ControlPrincipal controlPrincipal;
-    /**
-     * Atributo que contiene la ronda de juego.
-     */
-    private Persona[] mesa;
-    /**
-     * Forma de comprobar quien esta apostando en el momento.
-     * es decir, número de jugador.
-     * Este contador jamás sera 0.
-     */
-    private static int contador;
 
     /**
      * Metodo constructor 
@@ -37,47 +27,23 @@ public class ControlPersona {
      */
     public ControlPersona(ControlPrincipal controlPrincipal) {
         this.controlPrincipal = controlPrincipal;
-        crearMesa();
-        contador = 0;
     }
-
+    
     /**
-     * Método que crea el arreglo de personas llamado mesa
+     * Método para instanciar y añadir los jugadores a la mesa
+     * @param i, número del jugador. Objetivo: Verificar que no sea crupier
+     * @return personaAAgregar, objeto Persona a añadir
      */
-    public void crearMesa() {
-        mesa = new Persona[3]; 
-        for (int i = 0; i < mesa.length; i++) {
-            if (i == 2) {
-                mesa[i] = new Crupier();
-            } else {
-                mesa[i] = new Jugador();
-            }
+    public Persona crearJugadorMesa(int i) {
+        Persona personaAAgregar;
+        
+        if (i == 2) {
+            personaAAgregar = new Crupier();
+        } else {
+            personaAAgregar = new Jugador();
         }
-    }
-
-
-    public int colocarApuestas(int apuesta) {
-        int apuestas = 0;
-        if(contador%2 == 0 && mesa[0].getDinero()>apuesta){
-            apuestas = apuesta;
-        }
-        else if(contador%2 ==1 && mesa[1].getDinero()>apuesta){
-            apuestas = apuesta;
-        }
-        contador++;
-        return apuestas;
-    }
-
-    /**
-     * Método que retorna el jugador que pidió una carta, para luego unir
-     * la persona que retorna este método con su nueva carta en control principal 
-     * @param contador  contador que apunta a Persona (1: persona1, 2: persona2...)
-     * @return Persona que pidió la carta
-     */
-    public Persona getHitPersona(int contador){
-        Persona persona;
-        persona = mesa[(contador-1)];
-        return persona;
+        
+        return personaAAgregar;
     }
     
     public ControlPrincipal getControlPrincipal() {
@@ -88,20 +54,5 @@ public class ControlPersona {
         this.controlPrincipal = controlPrincipal;
     }
 
-    public Persona[] getMesa() {
-        return mesa;
-    }
-
-    public void setMesa(Persona[] mesa) {
-        this.mesa = mesa;
-    }
-
-    public static int getContador() {
-        return contador;
-    }
-
-    public static void setContador(int contador) {
-        ControlPersona.contador = contador;
-    }
 
 }

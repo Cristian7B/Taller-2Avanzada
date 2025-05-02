@@ -4,6 +4,8 @@
  */
 package edu.progavud.model;
 
+import java.util.ArrayList;
+
 /**
  * Clase hija de Persona que representa todos los jugadores dentro del juego.
  * 
@@ -18,6 +20,7 @@ public class Jugador extends Persona {
      * 
      * @param transaccion monto para sumarse a dinero y calcular el nuevo dinero del jugador
      */
+    
     @Override
     public void calcularDinero(int transaccion) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -29,16 +32,27 @@ public class Jugador extends Persona {
      * 
      * @return valor de la carta que obtuvo
      */
+    
     @Override
     public int pedirCarta() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    
     /**
-     * Método heredado de la clase Persona, sirve para que los
-     * jugadores hagan la apuesta inicial.
-     * 
-     * @return cantidad que va a apostar cada jugador
-     */ 
-    
-    
+     * Método para dividir la mano del jugador. Instancia el atributo manoDividida
+     * y crea 2 arrayList los cuales son agregados para dividir la mano
+     */
+    public void dividirMano() {
+        manoDividida = new ArrayList<>();
+        
+        ArrayList<Carta> manoDivivida1 = new ArrayList<>();
+        ArrayList<Carta> manoDivivida2 = new ArrayList<>();
+        
+        manoDivivida1.add(getMano().get(0));
+        manoDivivida2.add(getMano().get(1));
+        
+        getManoDividida().add(manoDivivida1);
+        getManoDividida().add(manoDivivida2);
+    }
 }
