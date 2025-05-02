@@ -14,6 +14,43 @@ import java.util.ArrayList;
 public class Jugador extends Persona {
 
     /**
+     * direccion del jugador
+     */
+    private String direccion;
+    /**
+     * Telefono del jugador;
+     */
+    private String telefono;
+    /**
+     * Apuesta inicial que realizará el jugador
+     */
+    private int apuesta;
+    /**
+     * Método constructor que solamente inicializa los atributos
+     */
+    public Jugador(){
+        super();
+        direccion = "";
+        telefono = "";
+        apuesta = 0;
+    }
+    /**
+     * Método constructor completo de la clase
+     * @param nombre    nombre del jugador
+     * @param apellido  apellido del jugador
+     * @param cedula    cedula del jugador
+     * @param dinero    dinero del jugador
+     * @param direccion direccion del jugador
+     * @param telefono  telefono del jugador
+     * @param apuesta   apuesta inicial del jugador
+     */
+    public Jugador(String nombre, String apellido, String cedula, int dinero, String direccion, String telefono, int apuesta){
+        super(nombre, apellido, cedula, dinero);
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.apuesta = apuesta;
+    }
+    /**
      * Método heredado de la clase Persona, calcula el dinero de los jugadores,
      * se conectará posteriormente con la vista por medio del control
      * para que se muestre en todo momento el dinero del jugador.

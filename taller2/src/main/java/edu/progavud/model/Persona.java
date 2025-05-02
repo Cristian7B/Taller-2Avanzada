@@ -74,6 +74,7 @@ public abstract class Persona {
         this.apellido = apellido;
         this.cedula = cedula;
         this.dinero = dinero;
+        this.mano = new ArrayList<>();
         isGanador = false;
     }
 
@@ -94,11 +95,6 @@ public abstract class Persona {
      */
     public abstract int pedirCarta();
     
-    /**
-     * 
-     * @return Array de manos independientes
-     */
-    public abstract void dividirMano();
 
     public String getNombre() {
         return nombre;
@@ -139,11 +135,6 @@ public abstract class Persona {
     public void setMano(ArrayList<Carta> mano) {
         
         this.mano = mano;
-    }
-    
-
-    public boolean isGanador() {
-        return isGanador;
     }
 
     public void setGanador(boolean isGanador) {

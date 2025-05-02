@@ -9,10 +9,26 @@ import java.util.ArrayList;
 /**
  * Esta clase representa el crupier del blackjack, hereda de la clase Persona.
  * 
- * @author ACER NITRO
+ * @author Nicolas Velasco
  */
 public class Crupier extends Persona {
 
+    /**
+     * Método constructor de la clase
+     */
+    public Crupier(){
+        super();
+    }
+    /**
+     * Método constructor de la clase, funciona exactamente igual que el de su padre
+     * @param nombre    nombre del crupier
+     * @param apellido  apellido del crupier
+     * @param cedula    cedula del crupier
+     * @param dinero    dinero del crupier
+     */
+    public Crupier(String nombre, String apellido, String cedula, int dinero){
+        super(nombre, apellido, cedula, dinero);
+    }
     /**
      * Método heredado de la clase Persona para calcular dinero 
      * que le debe dar al jugador.
@@ -45,22 +61,5 @@ public class Crupier extends Persona {
         anuncio = "";   
         return anuncio;
     }
-    
-    /**
-     * Método para dividir la mano del jugador. Instancia el atributo manoDividida
-     * y crea 2 arrayList los cuales son agregados para dividir la mano
-     */
-    public void dividirMano() {
-        manoDividida = new ArrayList<>();
         
-        ArrayList<Carta> manoDivivida1 = new ArrayList<>();
-        ArrayList<Carta> manoDivivida2 = new ArrayList<>();
-        
-        manoDivivida1.add(getMano().get(0));
-        manoDivivida2.add(getMano().get(1));
-        
-        getManoDividida().add(manoDivivida1);
-        getManoDividida().add(manoDivivida2);
-    }
-            
 }
