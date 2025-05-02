@@ -26,14 +26,30 @@ public class ControlPrincipal {
      */
     private ControlMazo controlMazo;
     /**
+     * Control para la gestión de la mesa, son 3 mesas en total
+     */
+    private ControlMesa controlMesa;
+    /**
      * Método constructor que enlaza la comunicación con todos los controles.
      */
     public ControlPrincipal(){
         controlPersona = new ControlPersona(this);
+        controlMesa = new ControlMesa(this);
         controlVista = new ControlVista(this);
         controlMazo = new ControlMazo(this);
+        anadirPersonas();
     }
-
+    
+    /**
+     * Método para añadir personas a la mesa por medio del array personas.
+     * Se crea la persona desde controlPersona y de pasa a controlMesa.
+     */    
+    public void anadirPersonas() {
+        for(int i = 0; i < 3; i++) {
+            controlMesa.agregarJugadorMesa(controlPersona.crearJugadorMesa(i), i);
+        }
+    }
+    
     /**
      * Método que une la persona que pidió con la carta con la nueva carta.
      * Primero se obtiene la persona escogida, luego su mano y a su mano se le añade
@@ -41,7 +57,7 @@ public class ControlPrincipal {
      * @param contador contador que apunta a una persona
      */
     public void pedir(int contador){
-        controlPersona.getHitPersona(contador).getMano().add(controlMazo.getRandomCarta());
+        controlMesa.getPersonaParaModificar(contador).getMano().add(controlMazo.getRandomCarta());
     }
     
     /**
@@ -53,7 +69,7 @@ public class ControlPrincipal {
      */
     public void repartoInicial(int ronda){
         for (int i = 0; i<3 ; i++){
-            controlPersona.getMesa()[i].getMano().add(controlMazo.generarMano(ronda).get(i));       
+            controlMesa.getPersonas()[i].getMano().add(controlMazo.generarMano(ronda).get(i));       
         }
     }
     
@@ -61,17 +77,22 @@ public class ControlPrincipal {
      * Método que dobla el valor de la
      * apuesta pero solo recibe una carta
      */
-    public void doblar() {
-        
+    public void doblar(int contador) {
+        if(controlMesa.verificarDoblar()) {
+            controlMesa.getPersonaParaModificar(contador).getMano().add(controlMazo.getRandomCarta());
+        }
     }
-
+    
     /**
      * Método heredado de la clase Persona,si tiene el mismo
      * valor en las dos cartas primeras, puede dividir sus cartas
      * en dos manos y generar otra apuesta con la nueva mano
      */
     public void dividir() {
-
+        if(controlMesa.verificarDividir) {
+            controlMesa.getPersonaParaModificar(contador).getManoDividida().get(0).add(controlMazo.getRandomCarta());
+            controlMesa.getPersonaParaModificar(contador).getManoDividida().get(1).add(controlMazo.getRandomCarta());
+        }
     }
 
     /**

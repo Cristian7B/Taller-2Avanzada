@@ -36,6 +36,10 @@ public abstract class Persona {
      */
     private ArrayList<Carta> mano;
     /**
+     * Arreglo con el mazo del jugador dividido(si es necesario)
+     */
+    protected ArrayList<ArrayList<Carta>> manoDividida;
+    /**
      * Forma de saber si la persona gano el juego.
      */
     private boolean isGanador;
@@ -89,6 +93,12 @@ public abstract class Persona {
      * @return valor de la carta que recibió
      */
     public abstract int pedirCarta();
+    
+    /**
+     * 
+     * @return Array de manos independientes
+     */
+    public abstract void dividirMano();
 
     public String getNombre() {
         return nombre;
@@ -139,5 +149,15 @@ public abstract class Persona {
     public void setGanador(boolean isGanador) {
         this.isGanador = isGanador;
     }
+
+    public ArrayList<ArrayList<Carta>> getManoDividida() {
+        return manoDividida;
+    }
+
+    public void setManoDividida(ArrayList<ArrayList<Carta>> manoDividida) {
+        this.manoDividida = manoDividida;
+    }
+    
+    
 
 }
