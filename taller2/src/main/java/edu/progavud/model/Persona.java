@@ -95,11 +95,6 @@ public abstract class Persona {
      */
     public abstract int pedirCarta();
     
-    /**
-     * 
-     * @return Array de manos independientes
-     */
-    public abstract void dividirMano();
 
     public String getNombre() {
         return nombre;

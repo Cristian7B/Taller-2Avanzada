@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 /**
  *
- * @author crisc
+ * @author Cristian Bonilla
  */
 public class ControlMesa {
     /**
