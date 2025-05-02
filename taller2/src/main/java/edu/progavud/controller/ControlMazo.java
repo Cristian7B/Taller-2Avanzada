@@ -87,6 +87,11 @@ public class ControlMazo {
         return mano;    
     }
     
+    
+    /**
+     * Método para obtener una carta y agregarlo a la mano de un jugador
+     * @return carta a agregar
+     */
     public Carta getRandomCarta(){
         Carta carta;
         Random ran = new Random();

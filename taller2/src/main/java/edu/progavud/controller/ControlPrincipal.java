@@ -89,9 +89,9 @@ public class ControlPrincipal {
      * en dos manos y generar otra apuesta con la nueva mano
      */
     public void dividir() {
-        if(controlMesa.verificarDividir) {
-            controlMesa.getPersonaParaModificar(contador).getManoDividida().get(0).add(controlMazo.getRandomCarta());
-            controlMesa.getPersonaParaModificar(contador).getManoDividida().get(1).add(controlMazo.getRandomCarta());
+        if(controlMesa.verificarDividir()) {
+            controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getManoDividida().get(0).add(controlMazo.getRandomCarta());
+            controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getManoDividida().get(1).add(controlMazo.getRandomCarta());
         }
     }
 

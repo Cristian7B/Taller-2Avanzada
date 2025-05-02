@@ -29,6 +29,11 @@ public class ControlPersona {
         this.controlPrincipal = controlPrincipal;
     }
     
+    /**
+     * Método para instanciar y añadir los jugadores a la mesa
+     * @param i, número del jugador. Objetivo: Verificar que no sea crupier
+     * @return personaAAgregar, objeto Persona a añadir
+     */
     public Persona crearJugadorMesa(int i) {
         Persona personaAAgregar;
         
