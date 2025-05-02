@@ -15,9 +15,6 @@ import java.util.Random;
  * @author Nicolas Velasco
  */
 public class ControlMazo {
-    //como Persona no se puede incluir dentro de este Control
-    //por SOLID, el método creado generarMano se usará
-    //para asignar la mano a los jugadores dentro de ControlPrincipal
     /**
      * Arreglo de objetos Carta para crear el mazo revuelto
      */
@@ -89,6 +86,12 @@ public class ControlMazo {
         mano.add(mazoRevuelto.get(ronda*3)); //crupier
         return mano;    
     }
+    
+    
+    /**
+     * Método para obtener una carta y agregarlo a la mano de un jugador
+     * @return carta a agregar
+     */
     public Carta getRandomCarta(){
         Carta carta;
         Random ran = new Random();
