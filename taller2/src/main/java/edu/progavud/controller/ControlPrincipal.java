@@ -4,6 +4,8 @@
  */
 package edu.progavud.controller;
 
+import edu.progavud.model.Carta;
+import edu.progavud.model.Persona;
 import java.util.ArrayList;
 /**
  * Clase encargada de controlar todo el resto de controles,
@@ -66,12 +68,22 @@ public class ControlPrincipal {
      *              la ronda 2 la segunda carta que se les da. En la segunda partida inician en la
      *              tercera ronda y así sucesivamente.
      */
-    public void repartoInicial(int ronda){
-        for (int i = 0; i<3 ; i++){
-            controlMesa.getPersonas()[i].getMano().add(controlMazo.generarMano(ronda).get(i));       
-        }
+    public void repartoInicial(int ronda) {
+        ArrayList<Carta> manoGenerada = controlMazo.generarMano(ronda);
+
+        // Jugador 1
+        controlMesa.getPersonas()[0].getMano().add(manoGenerada.get(0));
+        controlMesa.getPersonas()[0].getMano().add(manoGenerada.get(1));
+
+        // Jugador 2
+        controlMesa.getPersonas()[1].getMano().add(manoGenerada.get(2));
+        controlMesa.getPersonas()[1].getMano().add(manoGenerada.get(3));
+
+        // Crupier
+        controlMesa.getPersonas()[2].getMano().add(manoGenerada.get(4));
+        controlMesa.getPersonas()[2].getMano().add(manoGenerada.get(5));
     }
-    
+
     /**
      * Método que dobla el valor de la
      * apuesta pero solo recibe una carta
@@ -92,6 +104,10 @@ public class ControlPrincipal {
             controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getManoDividida().get(0).add(controlMazo.getRandomCarta());
             controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getManoDividida().get(1).add(controlMazo.getRandomCarta());
         }
+    }
+    
+    public Persona[] obtenerPersonas() {
+        return controlMesa.getPersonas();
     }
 
     /**
