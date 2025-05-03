@@ -12,7 +12,7 @@ import edu.progavud.controller.ControlPersona;
  * Clase padre que representa todas las personas dentro del juego,
  * posteriormente la clase Jugador y Crupier la extenderán.
  * 
- * @author ACER NITRO
+ * @author Nicolas Velasco
  */
 public abstract class Persona {
     /**
@@ -40,9 +40,9 @@ public abstract class Persona {
      */
     protected ArrayList<ArrayList<Carta>> manoDividida;
     /**
-     * Forma de saber si la persona gano el juego.
+     * Forma de saber si la persona gano el juego. 0 pierde, 1 empata y 2 gana.
      */
-    private boolean isGanador;
+    private int ganador;
 
     /**
      * Método constructor de la clase que solamente inicializa los atributos
@@ -53,7 +53,7 @@ public abstract class Persona {
         cedula = "";
         dinero = 0;
         mano = new ArrayList<>();
-        isGanador = false;
+        ganador = 0;
         
     }
 
@@ -75,7 +75,7 @@ public abstract class Persona {
         this.cedula = cedula;
         this.dinero = dinero;
         this.mano = new ArrayList<>();
-        isGanador = false;
+        ganador = 0;
     }
 
     /**
@@ -137,8 +137,8 @@ public abstract class Persona {
         this.mano = mano;
     }
 
-    public void setGanador(boolean isGanador) {
-        this.isGanador = isGanador;
+    public void setGanador(int ganador) {
+        this.ganador = ganador;
     }
 
     public ArrayList<ArrayList<Carta>> getManoDividida() {
@@ -148,7 +148,12 @@ public abstract class Persona {
     public void setManoDividida(ArrayList<ArrayList<Carta>> manoDividida) {
         this.manoDividida = manoDividida;
     }
-    
-    
 
+
+    public int getGanador() {
+        return ganador;
+    }
+    
+    
+    
 }

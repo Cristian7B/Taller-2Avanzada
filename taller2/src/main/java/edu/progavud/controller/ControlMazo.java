@@ -42,7 +42,10 @@ public class ControlMazo {
             for (int i = 1; i<=13;i++){
                 if (i>10){
                     baraja.add(new Carta(tipo.toString(),10));
-                }else{
+                }else if(i == 1){
+                    baraja.add(new Carta(tipo.toString(),11));
+                }
+                else{
                     baraja.add(new Carta(tipo.toString(),i));
                 }
             }
