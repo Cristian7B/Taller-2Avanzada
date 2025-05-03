@@ -8,6 +8,7 @@ import edu.progavud.model.Crupier;
 import edu.progavud.model.Jugador;
 import edu.progavud.model.Mesa;
 import edu.progavud.model.Persona;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -95,23 +96,164 @@ public class ControlMesa {
 
         return verificador;
     }
+    
+    /**
+     * Método que retorna un booleano para verificar si el jugador
+     * puede ejecutar la acción de asegurar o no.
+     * @return true puede asegurar, false no puede
+     */
+    public boolean verificarAsegurar(){
+        boolean verificador = false;
+        if (mesaActual.getPersonas()[2].getMano().get(0).getValorInterno()==11  && mesaActual.getPersonas()[2].getMano().size()==2 && mesaActual.getPersonas()[2].getMano().get(1).getValorInterno()==10  ){
+            verificador = true;
+        }
 
+        return verificador;
+    }
+
+    /**
+     * verifica que tenga dos cartas y que sumen 21
+     * @return true si tiene blackjack, false sino.
+     */
+    public boolean verificarBlackJack(){
+        boolean verificador = false;
+        if (mesaActual.getPersonas()[contador].getMano().size() == 2){
+            int sumaCartas = 0;
+            for (int i=0; i < mesaActual.getPersonas()[contador].getMano().size(); i++){
+                sumaCartas = sumaCartas + mesaActual.getPersonas()[contador].getMano().get(i).getValorInterno();
+            }
+            if (sumaCartas == 21){
+                verificador = true;
+            }
+        }
+        return verificador;
+    }
+    
+    /**
+     * Verifica si una persona puede ser ganadora debido a la suma de sus cartas
+     * y hace el proceso de hallar el ganador comparando cada mano del jugador
+     * con la del crupier.
+     * @return 0 sino es ganador, 1 si empataron, 2 si gano
+     */
+    public int verificarGanador(){
+        int sumaCartasJugador = 0;
+        int sumaCartasCrupier = 0;
+        int ganador = 0;
+        for (int i=0; i < mesaActual.getPersonas()[contador].getMano().size(); i++){
+            sumaCartasJugador = sumaCartasJugador + mesaActual.getPersonas()[contador].getMano().get(i).getValorInterno();
+        }
+        for (int i=0; i < mesaActual.getPersonas()[3].getMano().size(); i++){  //suponiendo que el contador 3 es el del crupier
+            sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[3].getMano().get(i).getValorInterno();
+        }
+        if (sumaCartasJugador <= 21 && sumaCartasCrupier <= 21){
+            if (sumaCartasJugador < sumaCartasCrupier){
+                ganador = 0;
+            }else if(sumaCartasJugador == sumaCartasCrupier){
+                ganador = 1;
+            }else{
+                ganador = 2;
+            }
+        }
+        
+        return ganador;
+    }
+    
     /**
      * Método que registra la apuesta del jugador actual.
      * Solo se acepta si el jugador tiene suficiente dinero.
+     * Se verifica que jugador esta haciendo la apuesta y se guarda dentro 
+     * del hashMap creado en Mesa
      * 
      * @param apuesta valor de la apuesta realizada.
-     * @return valor de la apuesta si fue aceptada, 0 en caso contrario.
      */
-    public int colocarApuestas(int apuesta) {
-        int apuestas = 0;
+    public void colocarApuestas(int apuesta) {
         if (contador % 2 == 0 && mesaActual.getPersonas()[0].getDinero() > apuesta) {
-            apuestas = apuesta;
+            mesaActual.getApuestasDeLaMesa().put(String.valueOf(0), apuesta);   //Jugador dos
         } else if (contador % 2 == 1 && mesaActual.getPersonas()[1].getDinero() > apuesta) {
-            apuestas = apuesta;
+            mesaActual.getApuestasDeLaMesa().put(String.valueOf(1), apuesta);   //Jugador uno porque contador nunca sera 0
         }
         contador++;
-        return apuestas;
+    }
+    
+    /**
+     * método que retorna la proporción de ganancia del jugador
+     * que decidió asegurar y ganó
+     * @return proporción que se usara en el método pagarApuesta
+     */
+    public double asegurarGanador(){
+        double proporcion = 0;
+        if (!verificarAsegurar()){
+            proporcion = -1/2;
+        }
+        return proporcion;
+    }
+    /**
+     * método que retorna la proporción en la que se le pagará al jugador
+     * @return proporcion que será parametro dentro de método pagarApuesta
+     */
+    public double blackJackGanador(){
+        double proporcion = 0;
+        if (verificarBlackJack()){
+            proporcion = 3/2;
+        }
+        return proporcion;
+    }
+    
+    /**
+     * Metodo para implementar si gano con dos manos o solo con una mano
+     * en caso de que haya decidido dividir su mano.
+     * Este método hace que el jugador que divida sus cartas siempre sea ganador 
+     * y luego se le aplica el pagar apuesta con el parametro que retorna este método.
+     * @return parámetro proporción que se usará dentro de la funcion pagarApuesta
+     */
+    public int divisionGanador(){
+        int proporcion = 0;
+        int sumaMano1 = 0;
+        int sumaMano2 = 0;
+        int sumaCartasCrupier = 0;
+        for (int i=0; i < mesaActual.getPersonas()[3].getMano().size(); i++){  //suponiendo que el contador 3 es el del crupier
+            sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[3].getMano().get(i).getValorInterno();
+        }
+        for (int i = 0; i< mesaActual.getPersonas()[contador].getManoDividida().get(0).size(); i++){
+            sumaMano1 = sumaMano1 + mesaActual.getPersonas()[contador].getManoDividida().get(0).get(i).getValorInterno();
+        }
+        for (int i = 0; i< mesaActual.getPersonas()[contador].getManoDividida().get(1).size(); i++){
+            sumaMano2 = sumaMano2 + mesaActual.getPersonas()[contador].getManoDividida().get(1).get(i).getValorInterno();
+        }
+        if (sumaCartasCrupier <= 21){
+            if (sumaMano1 <= 21 && sumaMano2 <= 21){ //cumple ambas
+                if (sumaMano1 < sumaCartasCrupier){
+                    proporcion = proporcion - 1;
+                }else if(sumaMano1 == sumaCartasCrupier){
+                }else{
+                    proporcion = proporcion + 1;
+                }
+                if (sumaMano2 < sumaCartasCrupier){
+                    proporcion = proporcion - 1;
+                }else if(sumaMano2 == sumaCartasCrupier){
+                }else{
+                    proporcion = proporcion + 1;
+                }
+            }else if (sumaMano1 <= 21 ^ sumaMano2 <= 21){ //cumple alguna
+                if (sumaMano1 < sumaCartasCrupier){
+                    proporcion = proporcion - 1;
+                }else if(sumaMano1 == sumaCartasCrupier){
+                }else{
+                    proporcion = proporcion + 1;
+                }
+                if (sumaMano2 < sumaCartasCrupier){
+                    proporcion = proporcion - 1;
+                }else if(sumaMano2 == sumaCartasCrupier){
+                }else{
+                    proporcion = proporcion + 1;
+                }
+            }else{ //no cumple ninguna
+                proporcion = -2;
+            }
+        }else{
+            proporcion = 2;
+        }
+        return proporcion;
     }
 
     /**
@@ -153,7 +295,23 @@ public class ControlMesa {
         ControlMesa.contador = contador;
     }
 
+    public Mesa getMesaActual() {
+        return mesaActual;
+    }
 
+    public void setMesaActual(Mesa mesaActual) {
+        this.mesaActual = mesaActual;
+    }
+
+    public ControlPrincipal getControlPrincipal() {
+        return controlPrincipal;
+    }
+
+    public void setControlPrincipal(ControlPrincipal controlPrincipal) {
+        this.controlPrincipal = controlPrincipal;
+    }
+
+    
   
     
 
