@@ -122,9 +122,9 @@ public class ControlPrincipal {
      * @param apuesta 
      * @return dinero que se le debe pagar a la persona
      */
-    public int pagarApuesta(int proporcion, int apuesta) {
-        int paga = 0;
-        paga = proporcion*apuesta;
+    public double pagarApuesta(double proporcion, int apuesta) {
+        double paga = 0;
+        paga = (double) apuesta* proporcion;
         return paga;
     }
 

@@ -175,10 +175,15 @@ public class ControlMesa {
         contador++;
     }
     
-    public int asegurarGanador(){
-        int proporcion = 0;
-        if (verificarAsegurar()){
-            proporcion = 3/2;
+    /**
+     * método que retorna la proporción de ganancia del jugador
+     * que decidió asegurar y ganó
+     * @return proporción que se usara en el método pagarApuesta
+     */
+    public double asegurarGanador(){
+        double proporcion = 0;
+        if (!verificarAsegurar()){
+            proporcion = -1/2;
         }
         return proporcion;
     }
@@ -186,8 +191,8 @@ public class ControlMesa {
      * método que retorna la proporción en la que se le pagará al jugador
      * @return proporcion que será parametro dentro de método pagarApuesta
      */
-    public int blackJackGanador(){
-        int proporcion = 0;
+    public double blackJackGanador(){
+        double proporcion = 0;
         if (verificarBlackJack()){
             proporcion = 3/2;
         }
