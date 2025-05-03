@@ -95,23 +95,32 @@ public class ControlPrincipal {
     }
 
     /**
-     * Método heredado de la clase Persona, puede asegurar
+     * Método que puede asegurar
      * apostando a que le salga blackjack al crupier,
      * si su primera carta es un as. se paga 2 a 1.
      * Se puede apostar como maximo, la mitad de lo que aposto
      * en la apuesta inicial.
      */
-    public void asegurar() {
-
+    public int asegurar() {
+        int apuestaAsegurar = 0;
+        if(controlMesa.verificarAsegurar()){
+            apuestaAsegurar = (controlMesa.getMesaActual().getApuestasDeLaMesa().get(String.valueOf(ControlMesa.getContador())))/2;
+        }
+        return apuestaAsegurar;
     }
 
     /**
-     * Método heredado de la clase Persona, se paga
-     * 3 a 2, si en las primeras dos cartas le sale blackjack,
-     * es decir que suman 21.
+     * Método que sirve para pagarle a una persona, el valor
+     * que retorne esta función siempre se le sumará al dinero que 
+     * tiene la persona
+     * @param proporcion
+     * @param apuesta 
+     * @return dinero que se le debe pagar a la persona
      */
-    public void blackjack() {
-
+    public int pagarApuesta(int proporcion, int apuesta) {
+        int paga = 0;
+        paga = proporcion*apuesta;
+        return paga;
     }
 
     /**
@@ -133,5 +142,7 @@ public class ControlPrincipal {
         ganador = false;
         return ganador;
     }
+    
+    
 
 }

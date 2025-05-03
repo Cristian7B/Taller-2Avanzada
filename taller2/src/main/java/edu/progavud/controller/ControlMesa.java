@@ -104,9 +104,10 @@ public class ControlMesa {
      */
     public boolean verificarAsegurar(){
         boolean verificador = false;
-        if (mesaActual.getPersonas()[2].getMano().get(0).getValorInterno()==1 || mesaActual.getPersonas()[2].getMano().get(0).getValorInterno()==11 && mesaActual.getPersonas()[2].getMano().size()==1 ){
+        if (mesaActual.getPersonas()[2].getMano().get(0).getValorInterno()==11  && mesaActual.getPersonas()[2].getMano().size()==2 && mesaActual.getPersonas()[2].getMano().get(1).getValorInterno()==10  ){
             verificador = true;
         }
+
         return verificador;
     }
 
@@ -172,6 +173,25 @@ public class ControlMesa {
             mesaActual.getApuestasDeLaMesa().put(String.valueOf(1), apuesta);   //Jugador uno porque contador nunca sera 0
         }
         contador++;
+    }
+    
+    public int asegurarGanador(){
+        int proporcion = 0;
+        if (verificarAsegurar()){
+            proporcion = 3/2;
+        }
+        return proporcion;
+    }
+    /**
+     * método que retorna la proporción en la que se le pagará al jugador
+     * @return proporcion que será parametro dentro de método pagarApuesta
+     */
+    public int blackJackGanador(){
+        int proporcion = 0;
+        if (verificarBlackJack()){
+            proporcion = 3/2;
+        }
+        return proporcion;
     }
     
     /**
