@@ -10,6 +10,7 @@ import edu.progavud.model.Mesa;
 import edu.progavud.model.Persona;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -167,12 +168,13 @@ public class ControlMesa {
      * @param apuesta valor de la apuesta realizada.
      */
     public void colocarApuestas(int apuesta) {
-        if (contador % 2 == 0 && mesaActual.getPersonas()[0].getDinero() > apuesta) {
-            mesaActual.getApuestasDeLaMesa().put(String.valueOf(0), apuesta);   //Jugador dos
-        } else if (contador % 2 == 1 && mesaActual.getPersonas()[1].getDinero() > apuesta) {
-            mesaActual.getApuestasDeLaMesa().put(String.valueOf(1), apuesta);   //Jugador uno porque contador nunca sera 0
+        if (contador % 2 == 0 && mesaActual.getPersonas()[0].getDinero() >= apuesta) {
+            mesaActual.getApuestasDeLaMesa().put(String.valueOf(0), mesaActual.getApuestasDeLaMesa().get(String.valueOf(0)) + apuesta);   //Jugador dos
+            mesaActual.getPersonas()[contador].setDinero(mesaActual.getPersonas()[0].getDinero()-apuesta);
+        } else if (contador % 2 == 1 && mesaActual.getPersonas()[1].getDinero() >= apuesta) {
+            mesaActual.getApuestasDeLaMesa().put(String.valueOf(1), mesaActual.getApuestasDeLaMesa().get(String.valueOf(1)) + apuesta);   //Jugador uno porque contador nunca sera 0
+            mesaActual.getPersonas()[contador].setDinero(mesaActual.getPersonas()[1].getDinero()-apuesta);
         }
-        contador++;
     }
     
     /**

@@ -96,10 +96,6 @@ public class ControlMazo {
         //crupier
         mano.add(mazoRevuelto.get((ronda*3)+2));
         mano.add(mazoRevuelto.get((ronda*3)+3));
-        
-        for(int i = 0; i < mano.size(); i++) {
-            System.out.println(mano.get(i).getValorInterno() + " " + mano.get(i).getTipo());
-        }
         return mano;    
     }
     

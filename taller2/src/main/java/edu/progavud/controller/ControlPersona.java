@@ -36,16 +36,18 @@ public class ControlPersona {
      */
     public Persona crearJugadorMesa(int i) {
         Persona personaAAgregar;
-        
-        if (i == 2) {
-            personaAAgregar = new Crupier();
+
+        if (i == 0) {
+            personaAAgregar = new Jugador("Juan", "Pérez", "12345678", 100, "Calle Falsa 123", "555-1234", 10230120);
+        } else if (i == 1) {
+            personaAAgregar = new Jugador("Ana", "Gómez", "87654321", 100, "Avenida Siempre Viva 742", "555-5678", 1231230);
         } else {
-            personaAAgregar = new Jugador();
+            personaAAgregar = new Crupier("Carlos", "Ramírez", "99999999", 100);
         }
-        
+
         return personaAAgregar;
     }
-    
+
     public ControlPrincipal getControlPrincipal() {
         return controlPrincipal;
     }
