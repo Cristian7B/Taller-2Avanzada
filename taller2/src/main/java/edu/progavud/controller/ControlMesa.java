@@ -43,7 +43,7 @@ public class ControlMesa {
         mesaActual = new Mesa();
         this.controlPrincipal = controlPrincipal;
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             mesaActual.getApuestasDeLaMesa().put(String.valueOf(i), 0);
         }
 

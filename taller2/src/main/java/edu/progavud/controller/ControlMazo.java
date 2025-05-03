@@ -81,9 +81,22 @@ public class ControlMazo {
      */
     public ArrayList<Carta> generarMano(int ronda){
         ArrayList<Carta> mano = new ArrayList<>();
-        mano.add(mazoRevuelto.get((ronda*3)-2)); //jugador 1
-        mano.add(mazoRevuelto.get((ronda*3)-1)); //jugador 2
-        mano.add(mazoRevuelto.get(ronda*3)); //crupier
+        
+        //jugador 1
+        mano.add(mazoRevuelto.get((ronda*3)-2)); 
+        mano.add(mazoRevuelto.get((ronda*3)-1));
+        
+        //jugador 2
+        mano.add(mazoRevuelto.get(ronda*3));
+        mano.add(mazoRevuelto.get((ronda*3)+1));
+        
+        //crupier
+        mano.add(mazoRevuelto.get((ronda*3)+2));
+        mano.add(mazoRevuelto.get((ronda*3)+3));
+        
+        for(int i = 0; i < mano.size(); i++) {
+            System.out.println(mano.get(i).getValorInterno() + " " + mano.get(i).getTipo());
+        }
         return mano;    
     }
     
