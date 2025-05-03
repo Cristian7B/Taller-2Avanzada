@@ -78,7 +78,7 @@ public class ControlPrincipal {
      */
     public void doblar(int contador) {
         if(controlMesa.verificarDoblar()) {
-            controlMesa.getPersonaParaModificar(contador).getMano().add(controlMazo.getRandomCarta());    
+            controlMesa.getPersonaParaModificar(contador).getMano().add(controlMazo.getRandomCarta());
         }
     }
     
@@ -89,9 +89,6 @@ public class ControlPrincipal {
      */
     public void dividir() {
         if(controlMesa.verificarDividir()) {
-            controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getManoDividida().get(0).add(controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getMano().get(0));
-            controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getManoDividida().get(1).add(controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getMano().get(0));
-
             controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getManoDividida().get(0).add(controlMazo.getRandomCarta());
             controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getManoDividida().get(1).add(controlMazo.getRandomCarta());
         }
@@ -103,14 +100,9 @@ public class ControlPrincipal {
      * si su primera carta es un as. se paga 2 a 1.
      * Se puede apostar como maximo, la mitad de lo que aposto
      * en la apuesta inicial.
-     * return valor que asegura, que por predeterminado siempre sera la mitad de la apuesta inicial
      */
-    public int asegurar() {
-        int apuestaAsegurar = 0;
-        if(controlMesa.verificarAsegurar()){
-            apuestaAsegurar = (controlMesa.getMesaActual().getApuestasDeLaMesa().get(String.valueOf(ControlMesa.getContador())))/2;
-        }
-        return apuestaAsegurar;
+    public void asegurar() {
+
     }
 
     /**
@@ -119,7 +111,7 @@ public class ControlPrincipal {
      * es decir que suman 21.
      */
     public void blackjack() {
-        
+
     }
 
     /**
@@ -127,15 +119,19 @@ public class ControlPrincipal {
      * planta cuando crea que no necesita mas cartas.
      */
     public void plantarse() {
-        ControlMesa.setContador(ControlMesa.getContador()+1);
+
     }
 
 
     /**
-     * Método que modifica el atributo ganador de la persona
+     * Método que retorna el ganador de cada ronda
+     * 
+     * @return cadena con el nombre del ganador de la ronda
      */
-    public void hallarGanador() {
-        controlMesa.getPersonaParaModificar(ControlMesa.getContador()).setGanador(controlMesa.verificarGanador());
+    public boolean hallarGanador() {
+        boolean ganador;
+        ganador = false;
+        return ganador;
     }
 
 }
