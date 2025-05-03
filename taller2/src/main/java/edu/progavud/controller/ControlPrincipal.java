@@ -5,7 +5,6 @@
 package edu.progavud.controller;
 
 import java.util.ArrayList;
-
 /**
  * Clase encargada de controlar todo el resto de controles,
  * enlaza todo el programa.
