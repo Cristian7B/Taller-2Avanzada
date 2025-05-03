@@ -8,6 +8,7 @@ import edu.progavud.model.Crupier;
 import edu.progavud.model.Jugador;
 import edu.progavud.model.Mesa;
 import edu.progavud.model.Persona;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -171,6 +172,63 @@ public class ControlMesa {
             mesaActual.getApuestasDeLaMesa().put(String.valueOf(1), apuesta);   //Jugador uno porque contador nunca sera 0
         }
         contador++;
+    }
+    
+    /**
+     * Metodo para implementar si gano con dos manos o solo con una mano
+     * en caso de que haya decidido dividir su mano.
+     * Este método hace que el jugador que divida sus cartas siempre sea ganador 
+     * y luego se le aplica el pagar apuesta con el parametro que retorna este método.
+     * @return parámetro proporción que se usará dentro de la funcion pagarApuesta
+     */
+    public int divisionGanador(){
+        int proporcion = 0;
+        int sumaMano1 = 0;
+        int sumaMano2 = 0;
+        int sumaCartasCrupier = 0;
+        for (int i=0; i < mesaActual.getPersonas()[3].getMano().size(); i++){  //suponiendo que el contador 3 es el del crupier
+            sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[3].getMano().get(i).getValorInterno();
+        }
+        for (int i = 0; i< mesaActual.getPersonas()[contador].getManoDividida().get(0).size(); i++){
+            sumaMano1 = sumaMano1 + mesaActual.getPersonas()[contador].getManoDividida().get(0).get(i).getValorInterno();
+        }
+        for (int i = 0; i< mesaActual.getPersonas()[contador].getManoDividida().get(1).size(); i++){
+            sumaMano2 = sumaMano2 + mesaActual.getPersonas()[contador].getManoDividida().get(1).get(i).getValorInterno();
+        }
+        if (sumaCartasCrupier <= 21){
+            if (sumaMano1 <= 21 && sumaMano2 <= 21){ //cumple ambas
+                if (sumaMano1 < sumaCartasCrupier){
+                    proporcion = proporcion - 1;
+                }else if(sumaMano1 == sumaCartasCrupier){
+                }else{
+                    proporcion = proporcion + 1;
+                }
+                if (sumaMano2 < sumaCartasCrupier){
+                    proporcion = proporcion - 1;
+                }else if(sumaMano2 == sumaCartasCrupier){
+                }else{
+                    proporcion = proporcion + 1;
+                }
+            }else if (sumaMano1 <= 21 ^ sumaMano2 <= 21){ //cumple alguna
+                if (sumaMano1 < sumaCartasCrupier){
+                    proporcion = proporcion - 1;
+                }else if(sumaMano1 == sumaCartasCrupier){
+                }else{
+                    proporcion = proporcion + 1;
+                }
+                if (sumaMano2 < sumaCartasCrupier){
+                    proporcion = proporcion - 1;
+                }else if(sumaMano2 == sumaCartasCrupier){
+                }else{
+                    proporcion = proporcion + 1;
+                }
+            }else{ //no cumple ninguna
+                proporcion = -2;
+            }
+        }else{
+            proporcion = 2;
+        }
+        return proporcion;
     }
 
     /**
