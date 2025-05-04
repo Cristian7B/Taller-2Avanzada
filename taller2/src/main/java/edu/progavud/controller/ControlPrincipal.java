@@ -274,8 +274,5 @@ public class ControlPrincipal {
     public void recuperarPath(String path) {
         cnxProperties = new CnxProperties(path, this);
     } 
-    public void moverPersonasAlFinal(){
-        controlMesa.setPersonas(controlPersona.moverPersonasAlFinal()) ;
-    }
 
 }

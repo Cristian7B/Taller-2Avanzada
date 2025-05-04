@@ -59,22 +59,6 @@ public class ControlPersona {
         return new Crupier(nombre, apellido, cedula, dinero);
     }
 
-
-
-    public Persona[] moverPersonasAlFinal(){
-        int cantidadPersona = 6;
-        Persona[] resultado = new Persona[6];
-
-        for (int i = 2; i < cantidadPersona; i++) {
-            resultado[i - 2] = controlPrincipal.obtenerPersonas()[i];
-        }
-
-        // Copiar los dos primeros al final
-        resultado[4] = controlPrincipal.obtenerPersonas()[0];
-        resultado[5] = controlPrincipal.obtenerPersonas()[1];
-
-        return resultado;
-    }
     
     public ControlPrincipal getControlPrincipal() {
         return controlPrincipal;

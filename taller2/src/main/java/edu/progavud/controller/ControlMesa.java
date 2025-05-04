@@ -31,7 +31,7 @@ public class ControlMesa {
     /**
      * Atributo que maneja la mesa actual, que se está jugando
      */
-    private static int numMesaActual;
+    public static int numMesaActual;
     
     /**
      * Atributo que contiene todas las mesas posibles del juego
@@ -152,10 +152,10 @@ public class ControlMesa {
         int sumaCartasCrupier = 0;
         int ganador = 0;
         for (int i=0; i < mesasPosibles.get(numMesaActual).getPersonas()[contador-1].getMano().size(); i++){
-            sumaCartasJugador = sumaCartasJugador + mesasPosibles.get(numMesaActual).getPersonas()[contador].getMano().get(i).getValorInterno();
+            sumaCartasJugador = sumaCartasJugador + mesasPosibles.get(numMesaActual).getPersonas()[contador-1].getMano().get(i).getValorInterno();
         }
-        for (int i=0; i < mesasPosibles.get(numMesaActual).getPersonas()[3].getMano().size(); i++){  //suponiendo que el contador 3 es el del crupier
-            sumaCartasCrupier = sumaCartasCrupier + mesasPosibles.get(numMesaActual).getPersonas()[3].getMano().get(i).getValorInterno();
+        for (int i=0; i < mesasPosibles.get(numMesaActual).getPersonas()[2].getMano().size(); i++){  //suponiendo que el contador 3 es el del crupier
+            sumaCartasCrupier = sumaCartasCrupier + mesasPosibles.get(numMesaActual).getPersonas()[2].getMano().get(i).getValorInterno();
         }
         if (sumaCartasJugador <= 21 && sumaCartasCrupier <= 21){
             if (sumaCartasJugador < sumaCartasCrupier){

@@ -187,12 +187,28 @@ public class ControlVista implements ActionListener{
         }else{           
             switch (comando){
                 case "SIGUIENTE":
-                    controlPrincipal.moverPersonasAlFinal();
+
                     controlPrincipal.rondaActual = 2;
-                    ControlMesa.setContador(1);
+                    ventanaJuego.mostrarMensaje("Realicen sus apuestas antes de repartir cartas. Al principio solo podrá apostar con una única ficha, o en su defecto hacer AllIn");
+                    ControlMesa.numMesaActual = ControlMesa.numMesaActual +1;
+                    ControlMesa.setContador(0);
+                    ventanaJuego.getPanelCartasJugador().removeAll();
+                    ventanaJuego.getPanelCartasJugador().revalidate();
+                    ventanaJuego.getPanelCartasJugador().repaint();
+                    ventanaJuego.getPanelCartasJugador2().removeAll();
+                    ventanaJuego.getPanelCartasJugador2().revalidate();
+                    ventanaJuego.getPanelCartasJugador2().repaint();
+                    ventanaJuego.getPanelCartasCrupier().removeAll();
+                    ventanaJuego.getPanelCartasCrupier().revalidate();
+                    ventanaJuego.getPanelCartasCrupier().repaint();
+                                   
                     actualizarEstadoJugador();
 
-                    ventanaJuego.mostrarMensaje("Realicen sus apuestas antes de repartir cartas. Al principio solo podrá apostar con una única ficha, o en su defecto hacer AllIn");
+                    ventanaJuego.btnAsegurar.setVisible(false);
+                    ventanaJuego.btnDouble.setVisible(false);
+                    ventanaJuego.btnHit.setVisible(false);
+                    ventanaJuego.btnSplit.setVisible(false);
+                    ventanaJuego.btnStay.setVisible(false);
                     break;
             }               
         }
@@ -243,7 +259,7 @@ public class ControlVista implements ActionListener{
     private void avanzarRondaSiListo() {
         ControlMesa.setContador(ControlMesa.getContador()+1);
 
-        if (ControlMesa.getContador() == 2 && controlPrincipal.rondaActual == 1) {
+        if (ControlMesa.getContador() == 2 ) {
             controlPrincipal.rondaActual = 2;
             ControlMesa.setContador(1); 
 
@@ -310,6 +326,7 @@ public class ControlVista implements ActionListener{
     
     private void actualizarEstadoJugador() {
         int jugadorActual = ControlMesa.getContador();
+        jugadorActual = jugadorActual %2;
         ventanaJuego.getLabelJugador().setText(controlPrincipal.obtenerPersonas()[jugadorActual].getNombre());
         ventanaJuego.getLabelDinero().setText("Dinero disponible: $" + String.valueOf(controlPrincipal.obtenerPersonas()[jugadorActual].getDinero()));
         ventanaJuego.getFondo().revalidate();
