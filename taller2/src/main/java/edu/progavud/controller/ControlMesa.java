@@ -70,11 +70,11 @@ public class ControlMesa {
      */
     public boolean verificarDoblar() {
         boolean verificador = false;
-        Integer valor = mesaActual.getApuestasDeLaMesa().get(String.valueOf(contador));
+        Integer valor = mesaActual.getApuestasDeLaMesa().get(String.valueOf(contador-1));
 
-        if (valor != 0) {
+        if (mesaActual.getPersonas()[contador-1].getMano().size() == 2) {
             verificador = true;
-            mesaActual.getApuestasDeLaMesa().put(String.valueOf(contador), valor * 2);
+            mesaActual.getApuestasDeLaMesa().put(String.valueOf(contador-1), valor * 2);
         }
 
         return verificador;
@@ -134,17 +134,17 @@ public class ControlMesa {
      * Verifica si una persona puede ser ganadora debido a la suma de sus cartas
      * y hace el proceso de hallar el ganador comparando cada mano del jugador
      * con la del crupier.
-     * @return 0 sino es ganador, 1 si empataron, 2 si gano
+     * @return 0 si perdio, 1 si empataron, 2 si gano
      */
     public int verificarGanador(){
         int sumaCartasJugador = 0;
         int sumaCartasCrupier = 0;
         int ganador = 0;
-        for (int i=0; i < mesaActual.getPersonas()[contador].getMano().size(); i++){
-            sumaCartasJugador = sumaCartasJugador + mesaActual.getPersonas()[contador].getMano().get(i).getValorInterno();
+        for (int i=0; i < mesaActual.getPersonas()[contador-1].getMano().size(); i++){
+            sumaCartasJugador = sumaCartasJugador + mesaActual.getPersonas()[contador-1].getMano().get(i).getValorInterno();
         }
-        for (int i=0; i < mesaActual.getPersonas()[3].getMano().size(); i++){  //suponiendo que el contador 3 es el del crupier
-            sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[3].getMano().get(i).getValorInterno();
+        for (int i=0; i < mesaActual.getPersonas()[2].getMano().size(); i++){  
+            sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[2].getMano().get(i).getValorInterno();
         }
         if (sumaCartasJugador <= 21 && sumaCartasCrupier <= 21){
             if (sumaCartasJugador < sumaCartasCrupier){
@@ -278,6 +278,10 @@ public class ControlMesa {
     public Persona[] getPersonas() {
         return mesaActual.getPersonas();
     }
+    
+    public void setPersonas(Persona[] personas){
+        mesaActual.setPersonas(personas);
+    }
 
     /**
      * Método para obtener el valor actual del contador de jugadores.
@@ -314,7 +318,7 @@ public class ControlMesa {
     }
 
     
-  
+    
     
 
 }

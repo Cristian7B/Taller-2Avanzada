@@ -50,16 +50,5 @@ public class Crupier extends Persona {
     public int pedirCarta() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
-    /**
-     * Método que retorna el anuncio que hace el crupier en un momento del juego.
-     * 
-     * @return Cadena del anuncio que da el crupier
-     */
-    public String anuncio(){
-        String anuncio;
-        anuncio = "";   
-        return anuncio;
-    }
-        
+
 }
