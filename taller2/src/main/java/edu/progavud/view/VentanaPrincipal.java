@@ -96,7 +96,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jPanel1.add(jPanel2);
         jPanel2.setBounds(440, 350, 170, 130);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pantallaInicial.png"))); // NOI18N
+        // jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pantallaInicial.png"))); // NOI18N
         jLabel1.setText("jLabel1");
         jPanel1.add(jLabel1);
         jLabel1.setBounds(0, 0, 1040, 570);

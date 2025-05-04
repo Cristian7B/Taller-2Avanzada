@@ -1,10 +1,11 @@
+package org.progavud;
 import static org.junit.jupiter.api.Assertions.*;
 
-import edu.progavud.controller.ControlMesa;
+import edu.progavud.controller.ControlMazo;
 
-public class ControlMesaTest {
+public class ControlMazoTest {
 
-          static  ControlMesa instance;
+          static  ControlMazo instance;
 
           @org.junit.jupiter.api.BeforeAll
           public static void setUpClass(){
@@ -17,8 +18,8 @@ public class ControlMesaTest {
           }
 
           @org.junit.jupiter.api.Test
-          public void  agregarJugadorMesaTest(){
+          public void  revolverMazoTest(){
                     
           }
-
+          
 }
