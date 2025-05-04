@@ -44,6 +44,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void initComponents() throws IOException {
 
         jFileChooser1 = new javax.swing.JFileChooser();
+        jFileChooser2 = new javax.swing.JFileChooser(); 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
@@ -52,11 +53,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
-        
-        jFileChooser1.showOpenDialog(this); 
-        String rutaArchivo = jFileChooser1.getSelectedFile().getAbsolutePath(); 
-        controlVista.getControlPrincipal().recuperarPath(rutaArchivo);
+        JOptionPane.showMessageDialog(this, "Seleccione el archivo .properties");
+        jFileChooser1.showOpenDialog(this);
+        String rutaProperties = jFileChooser1.getSelectedFile().getAbsolutePath();
+        controlVista.getControlPrincipal().recuperarPath(rutaProperties);
 
+        JOptionPane.showMessageDialog(this, "Seleccione el archivo aleatorio (registro binario)");
+        jFileChooser2.showOpenDialog(this);
+        String rutaAleatorio = jFileChooser2.getSelectedFile().getAbsolutePath();
+        controlVista.getControlPrincipal().recuperarPathAleatorio(rutaAleatorio);
+        
         jPanel1.setBackground(new java.awt.Color(153, 255, 51));
         jPanel1.setLayout(null);
 
@@ -127,6 +133,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JFileChooser jFileChooser2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

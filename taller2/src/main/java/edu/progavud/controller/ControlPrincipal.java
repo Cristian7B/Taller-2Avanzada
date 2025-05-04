@@ -4,6 +4,7 @@
  */
 package edu.progavud.controller;
 
+import edu.progavud.model.ArchivoWinners;
 import edu.progavud.model.Carta;
 import edu.progavud.model.CnxProperties;
 import edu.progavud.model.Crupier;
@@ -63,6 +64,11 @@ public class ControlPrincipal {
      * Objeto para poder hacer la serialización del crupier.
      */
     private SerializableCrupier serializableCrupier;
+    
+    /**
+     * Archivo aleatorio con la información final de las personas
+     */
+    private ArchivoWinners archivoWinners;
     /**
      * Método constructor que enlaza la comunicación con todos los controles.
      */
@@ -220,10 +226,27 @@ public class ControlPrincipal {
      * @return dinero que se le debe pagar a la persona
      */
     public double pagarApuesta(double proporcion, int apuesta) {
-        double paga = 0;
-        paga = (double) apuesta* proporcion;
+        double paga = (double) apuesta * proporcion;
+
+        for (int i = 0; i < 2; i++) {
+            String nombre = controlMesa.getMesaActual().getPersonas()[i].getNombre() +
+                            controlMesa.getMesaActual().getPersonas()[i].getApellido();
+
+            if (nombre.length() < 25) {
+                nombre = String.format("%-25s", nombre);
+            } else {
+                nombre = nombre.substring(0, 25);
+            }
+
+            double apuestaJugador = controlMesa.getMesaActual().getApuestasDeLaMesa().get(i);
+            double dinero = controlMesa.getMesaActual().getPersonas()[i].getDinero();
+
+            archivoWinners.escribir(nombre, apuestaJugador, dinero);
+        }
+
         return paga;
     }
+
 
     /**
      * Método heredado de la clase Persona, el jugador se
@@ -274,6 +297,13 @@ public class ControlPrincipal {
     public void recuperarPath(String path) {
         cnxProperties = new CnxProperties(path, this);
     } 
+    /**
+     * Método para recuperar la ruta al archivo aleatorio por medio de la vista.
+     */
+    public void recuperarPathAleatorio(String path) {
+        archivoWinners = new ArchivoWinners(path, this);
+    }
+    
     public void moverPersonasAlFinal(){
         controlMesa.setPersonas(controlPersona.moverPersonasAlFinal()) ;
     }

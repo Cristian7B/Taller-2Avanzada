@@ -4,6 +4,7 @@
  */
 package edu.progavud.controller;
 
+import edu.progavud.model.CnxProperties;
 import edu.progavud.view.VentanaJuego;
 import edu.progavud.view.VentanaPrincipal;
 import java.awt.Color;
