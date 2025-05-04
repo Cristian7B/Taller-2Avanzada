@@ -95,6 +95,7 @@ public abstract class Persona {
      */
     public abstract int pedirCarta();
     
+    
 
     public String getNombre() {
         return nombre;

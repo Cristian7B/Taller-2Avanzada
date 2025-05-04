@@ -70,11 +70,11 @@ public class ControlMesa {
      */
     public boolean verificarDoblar() {
         boolean verificador = false;
-        Integer valor = mesaActual.getApuestasDeLaMesa().get(String.valueOf((contador-1)%2));
+        Integer valor = mesaActual.getApuestasDeLaMesa().get(String.valueOf(contador-1));
 
-        if (valor != 0) {
+        if (mesaActual.getPersonas()[contador-1].getMano().size() == 2) {
             verificador = true;
-            mesaActual.getApuestasDeLaMesa().put(String.valueOf((contador-1)%2), valor * 2);
+            mesaActual.getApuestasDeLaMesa().put(String.valueOf(contador-1), valor * 2);
         }
 
         return verificador;
@@ -134,7 +134,7 @@ public class ControlMesa {
      * Verifica si una persona puede ser ganadora debido a la suma de sus cartas
      * y hace el proceso de hallar el ganador comparando cada mano del jugador
      * con la del crupier.
-     * @return 0 sino es ganador, 1 si empataron, 2 si gano
+     * @return 0 si perdio, 1 si empataron, 2 si gano
      */
     public int verificarGanador(){
         int sumaCartasJugador = 0;
@@ -143,7 +143,7 @@ public class ControlMesa {
         for (int i=0; i < mesaActual.getPersonas()[contador-1].getMano().size(); i++){
             sumaCartasJugador = sumaCartasJugador + mesaActual.getPersonas()[contador-1].getMano().get(i).getValorInterno();
         }
-        for (int i=0; i < mesaActual.getPersonas()[2].getMano().size(); i++){  //suponiendo que el contador 2 es el del crupier
+        for (int i=0; i < mesaActual.getPersonas()[2].getMano().size(); i++){  
             sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[2].getMano().get(i).getValorInterno();
         }
         if (sumaCartasJugador <= 21 && sumaCartasCrupier <= 21){
@@ -281,6 +281,10 @@ public class ControlMesa {
     public Persona[] getPersonas() {
         return mesaActual.getPersonas();
     }
+    
+    public void setPersonas(Persona[] personas){
+        mesaActual.setPersonas(personas);
+    }
 
     /**
      * Método para obtener el valor actual del contador de jugadores.
@@ -317,7 +321,7 @@ public class ControlMesa {
     }
 
     
-  
+    
     
 
 }
