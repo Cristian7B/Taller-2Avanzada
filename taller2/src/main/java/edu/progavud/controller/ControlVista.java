@@ -6,6 +6,7 @@ package edu.progavud.controller;
 
 import edu.progavud.view.VentanaJuego;
 import edu.progavud.view.VentanaPrincipal;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -192,6 +193,7 @@ public class ControlVista implements ActionListener{
         ventanaJuego.getLabelDinero().setText("Dinero disponible: $" + String.valueOf(controlPrincipal.obtenerPersonas()[jugadorActual].getDinero()));
         ventanaJuego.getFondo().revalidate();
         ventanaJuego.getFondo().repaint();
+       
     }
     
     private void actualizarEstadoApuestas() {

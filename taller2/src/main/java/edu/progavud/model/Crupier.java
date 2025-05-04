@@ -62,5 +62,8 @@ public class Crupier extends Persona implements Serializable {
         anuncio = "";   
         return anuncio;
     }
-        
+    
+    public String getNombre() {
+        return super.getNombre();
+    }
 }

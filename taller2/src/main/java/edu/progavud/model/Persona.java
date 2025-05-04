@@ -7,6 +7,7 @@ package edu.progavud.model;
 import java.util.ArrayList;
 
 import edu.progavud.controller.ControlPersona;
+import java.io.Serializable;
 
 /**
  * Clase padre que representa todas las personas dentro del juego,
@@ -14,7 +15,7 @@ import edu.progavud.controller.ControlPersona;
  * 
  * @author Nicolas Velasco
  */
-public abstract class Persona {
+public abstract class Persona implements Serializable{
     /**
      * Cadena que representa los nombres de todas las personas en el juego
      */

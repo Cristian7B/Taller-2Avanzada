@@ -9,6 +9,7 @@ import edu.progavud.model.CnxProperties;
 import edu.progavud.model.Crupier;
 import edu.progavud.model.Jugador;
 import edu.progavud.model.Persona;
+import edu.progavud.model.SerializableCrupier;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -59,10 +60,15 @@ public class ControlPrincipal {
     private Crupier crupierInformacion;
     
     /**
+     * Objeto para poder hacer la serialización del crupier.
+     */
+    private SerializableCrupier serializableCrupier;
+    /**
      * Método constructor que enlaza la comunicación con todos los controles.
      */
     public ControlPrincipal(){
         controlPersona = new ControlPersona(this);
+        serializableCrupier = new SerializableCrupier();
         controlVista = new ControlVista(this);
         controlMazo = new ControlMazo(this);
         rondaActual = 0;
@@ -88,9 +94,19 @@ public class ControlPrincipal {
     }
     
     public void crearCrupier(ArrayList<String> informacionCrupier) {
-        crupierInformacion = controlPersona.crearCrupier(informacionCrupier.get(0), informacionCrupier.get(1), informacionCrupier.get(2), Integer.parseInt(informacionCrupier.get(3)));
+        if (serializableCrupier.archivoExiste()) {
+            crupierInformacion = (Crupier) serializableCrupier.leerArchivoSerializado();
+        } else {
+            crupierInformacion = controlPersona.crearCrupier(
+                informacionCrupier.get(0),
+                informacionCrupier.get(1),
+                informacionCrupier.get(2),
+                Integer.parseInt(informacionCrupier.get(3))
+            );
+            serializableCrupier.escribirArchivoSerializado(crupierInformacion);
+        }
     }
-    
+
     
     /**
      * Método que une la persona que pidió con la carta con la nueva carta.

@@ -5,6 +5,7 @@
 package edu.progavud.model;
 
 import java.io.EOFException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -23,16 +24,12 @@ public class SerializableCrupier {
     private ObjectInputStream entrada;
 
     
-    public SerializableCrupier() {
-        try {
-            fileOut = new FileOutputStream("personas.bin");
-            salida = new ObjectOutputStream(fileOut);
-            fileIn = new FileInputStream("personas.bin");
-            entrada = new ObjectInputStream(fileIn);
-        } 
-        catch (FileNotFoundException ex) {
-        } 
-        catch (IOException ex) {
+    public void escribirArchivoSerializado(Crupier crupier) {
+        try (FileOutputStream fileOut = new FileOutputStream("data/crupier.bin");
+            ObjectOutputStream salida = new ObjectOutputStream(fileOut)) {
+            salida.writeObject(crupier);
+        } catch (IOException ex) {
+           
         }
     }
     
@@ -41,7 +38,7 @@ public class SerializableCrupier {
             try {
                 salida.close();
             } catch (IOException ex) {
-                System.out.println("no se puede cerrar la salida");
+                
             }
         }
     }
@@ -51,34 +48,31 @@ public class SerializableCrupier {
            try {
                 entrada.close();
             } catch (IOException ex) {
-                System.out.println("no se puede cerrar la entrada");
+                
             }
         }
     }
-    
-    public void escribirArchivoSerializado(Crupier crupier) {
-        if (salida != null) {
-            try {
-                salida.writeObject(crupier);
-            } catch (IOException ex) {
-                System.out.println("no se puede serializar la persona");
-            }
-        }
-    }
+   
     
     public Persona leerArchivoSerializado() {
         Crupier crupier = null;
-        if (entrada != null) {
-            try {
-                crupier = (Crupier) entrada.readObject();
-            } catch (EOFException eof) {
-                //fin del archivo
-            } catch (IOException io) {
-            //fin del archivo
-            } catch (ClassNotFoundException cnfe) {
-            //fin del archivo
-            }
+        try (FileInputStream fileIn = new FileInputStream("data/crupier.bin");
+            ObjectInputStream entrada = new ObjectInputStream(fileIn)) {
+            crupier = (Crupier) entrada.readObject();
+        } catch (EOFException eof) {
+            //
+        } catch (IOException io) {
+            //
+        } catch (ClassNotFoundException cnfe) {
+             //;
         }
         return crupier;
+    }
+
+    
+    
+    public boolean archivoExiste() {
+        File archivo = new File("data/crupier.bin");
+        return archivo.exists() && archivo.length() > 0;
     }
 }
