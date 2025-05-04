@@ -7,8 +7,6 @@ import java.util.Map;
 import javax.swing.*;
 
 public class VentanaJuego extends javax.swing.JFrame {
-
-    private JLabel labelTiempo;
     private int segundos = 0;
     private Timer timer;
     
@@ -16,14 +14,23 @@ public class VentanaJuego extends javax.swing.JFrame {
 
     private int fichasApostadas = 0;
     private int dineroJugador = 1000;
-
+    
+    private JLabel labelJugador;
     private JLabel labelFichas;
+    private JLabel labelFichas2;
     private JLabel labelDinero;
 
     public JButton btnHit;
     public JButton btnDouble;
     public JButton btnStay;
     public JButton btnSplit;
+    
+    public JButton btnFicha1;
+    public JButton btnFicha5;
+    public JButton btnFicha10;
+    public JButton btnFicha25;
+    public JButton btnFicha50;
+    public JButton btnAllIn;
 
     private ControlVista controlVista;
 
@@ -35,7 +42,6 @@ public class VentanaJuego extends javax.swing.JFrame {
     public VentanaJuego(ControlVista controlVista) {
         this.controlVista = controlVista;
         initComponents();
-        iniciarTemporizador();
     }
 
     private void initComponents() {
@@ -57,7 +63,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         JPanel panelApuestasNorth = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
         panelApuestasNorth.setOpaque(false);
 
-        JButton btnFicha1 = new JButton("+1");
+        btnFicha1 = new JButton("+1");
         btnFicha1.setBackground(new Color(0x4CAF50));
         btnFicha1.setForeground(new Color(0xF5EE9E));
         btnFicha1.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -65,7 +71,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnFicha1.setFocusPainted(false);
         btnFicha1.setBorder(null);
 
-        JButton btnFicha5 = new JButton("+5");
+        btnFicha5 = new JButton("+5");
         btnFicha5.setBackground(new Color(0x2196F3));
         btnFicha5.setForeground(new Color(0xF5EE9E));
         btnFicha5.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -73,7 +79,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnFicha5.setFocusPainted(false);
         btnFicha5.setBorder(null);
 
-        JButton btnFicha10 = new JButton("+10");
+        btnFicha10 = new JButton("+10");
         btnFicha10.setBackground(new Color(0xFFC107));
         btnFicha10.setForeground(new Color(0xF5EE9E));
         btnFicha10.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -81,7 +87,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnFicha10.setFocusPainted(false);
         btnFicha10.setBorder(null);
 
-        JButton btnFicha25 = new JButton("+25");
+        btnFicha25 = new JButton("+25");
         btnFicha25.setBackground(new Color(0xFF5722));
         btnFicha25.setForeground(new Color(0xF5EE9E));
         btnFicha25.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -89,7 +95,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnFicha25.setFocusPainted(false);
         btnFicha25.setBorder(null);
 
-        JButton btnFicha50 = new JButton("+50");
+        btnFicha50 = new JButton("+50");
         btnFicha50.setBackground(new Color(0x9C27B0));
         btnFicha50.setForeground(new Color(0xF5EE9E));
         btnFicha50.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -97,7 +103,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnFicha50.setFocusPainted(false);
         btnFicha50.setBorder(null);
 
-        JButton btnAllIn = new JButton("All In");
+        btnAllIn = new JButton("All In");
         btnAllIn.setBackground(new Color(0xB71C1C));
         btnAllIn.setForeground(new Color(0xF5EE9E));
         btnAllIn.setFont(new Font("SansSerif", Font.BOLD, 14));
@@ -156,43 +162,53 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnSplit.setPreferredSize(new Dimension(100, 40));
         btnSplit.setFocusPainted(false);
         btnSplit.setBorder(null);
-
-        labelTiempo = new JLabel("Tiempo: 00:00");
-        labelTiempo.setFont(new Font("SansSerif", Font.BOLD, 16));
-        labelTiempo.setForeground(colorTexto);
-
         panelBotones.add(btnHit);
         panelBotones.add(btnDouble);
         panelBotones.add(btnStay);
         panelBotones.add(btnSplit);
-        panelBotones.add(labelTiempo);
 
         panelSur.add(panelBotones);
         panelBase.add(panelSur, BorderLayout.SOUTH);
 
-        // Panel de turno
-        JPanel panelTurno = new JPanel(new BorderLayout());
-        panelTurno.setBackground(new Color(255, 255, 255, 180));
-        JLabel labelJugador = new JLabel("Turno: Jugador 1");
-        panelTurno.add(labelJugador, BorderLayout.CENTER);
-        fondo.add(panelTurno);
-        panelTurno.setBounds(20, 20, 150, 40);
+        Font fuenteLabel = new Font("SansSerif", Font.BOLD, 14);
 
-        // Panel de apuestas (fichas y dinero)
+        JPanel panelTurno = new JPanel(new BorderLayout());
+        panelTurno.setBackground(new Color(0, 0, 0, 150)); 
+        panelTurno.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10)); 
+
+        labelJugador = new JLabel("Turno: Jugador 1");
+        labelJugador.setFont(fuenteLabel);
+        labelJugador.setForeground(colorTexto);
+
+        labelDinero = new JLabel("Dinero disponible: $1000");
+        labelDinero.setFont(fuenteLabel);
+        labelDinero.setForeground(colorTexto);
+
+        panelTurno.add(labelJugador, BorderLayout.CENTER);
+        panelTurno.add(labelDinero, BorderLayout.SOUTH);
+
+        fondo.add(panelTurno);
+        panelTurno.setBounds(20, 20, 200, 60);
+
         JPanel panelApuesta = new JPanel();
         panelApuesta.setLayout(new BoxLayout(panelApuesta, BoxLayout.Y_AXIS));
-        panelApuesta.setBackground(new Color(255, 255, 255, 200));
+        panelApuesta.setBackground(new Color(0, 0, 0, 180)); 
+        panelApuesta.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); 
 
-        JButton btnAgregarFicha = new JButton("+1 Ficha");
-        labelFichas = new JLabel("Fichas apostadas: 0");
-        labelDinero = new JLabel("Dinero disponible: $1000");
+        labelFichas = new JLabel("Fichas apostadas Jugador 1: 0");
+        labelFichas.setFont(fuenteLabel);
+        labelFichas.setForeground(colorTexto);
 
-        panelApuesta.add(btnAgregarFicha);
+        labelFichas2 = new JLabel("Fichas apostadas Jugador 2: 0");
+        labelFichas2.setFont(fuenteLabel);
+        labelFichas2.setForeground(colorTexto);
+
         panelApuesta.add(labelFichas);
-        panelApuesta.add(labelDinero);
+        panelApuesta.add(Box.createVerticalStrut(5)); 
+        panelApuesta.add(labelFichas2);
 
         fondo.add(panelApuesta);
-        panelApuesta.setBounds(870, 20, 200, 80);
+        panelApuesta.setBounds(770, 20, 270, 80);
 
         crearPanelesDeCartas();
     }
@@ -217,6 +233,11 @@ public class VentanaJuego extends javax.swing.JFrame {
         panelCartasJugador2.setBounds(780, 350, 400, 100); 
         fondo.add(panelCartasJugador2);
     }
+    
+    public void mostrarMensaje(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+    }
+
 
     public JPanel crearCarta(String valor, String tipo) {
         Map<String, String> tipoMapa = new HashMap<>();
@@ -287,27 +308,23 @@ public class VentanaJuego extends javax.swing.JFrame {
     }
 
 
-
-    private void actualizarApuestaUI() {
-        labelFichas.setText("Fichas apostadas: " + fichasApostadas);
-        labelDinero.setText("Dinero disponible: $" + dineroJugador);
-    }
-
-    private void iniciarTemporizador() {
-        timer = new Timer(1000, e -> {
-            segundos++;
-            int minutos = segundos / 60;
-            int seg = segundos % 60;
-            labelTiempo.setText(String.format("Tiempo: %02d:%02d", minutos, seg));
-        });
-        timer.start();
-    }
-
     // Getters y setters
 
-    public JLabel getLabelTiempo() { return labelTiempo; }
-    public void setLabelTiempo(JLabel labelTiempo) { this.labelTiempo = labelTiempo; }
+    public JLabel getLabelJugador() {
+        return labelJugador;
+    }
 
+    public void setLabelJugador(JLabel labelJugador) {
+        this.labelJugador = labelJugador;
+    }
+
+    public JLabel getLabelFichas2() {
+        return labelFichas2;
+    }
+
+    public void setLabelFichas2(JLabel labelFichas2) {
+        this.labelFichas2 = labelFichas2;
+    }
     public int getSegundos() { return segundos; }
     public void setSegundos(int segundos) { this.segundos = segundos; }
 
@@ -335,11 +352,22 @@ public class VentanaJuego extends javax.swing.JFrame {
     public JButton getBtnDouble() { return btnDouble; }
     public void setBtnDouble(JButton btnDouble) { this.btnDouble = btnDouble; }
 
+    public JLabel getFondo() {
+        return fondo;
+    }
+
+    public void setFondo(JLabel fondo) {
+        this.fondo = fondo;
+    }
+    
+
     public JButton getBtnStay() { return btnStay; }
     public void setBtnStay(JButton btnStay) { this.btnStay = btnStay; }
 
     public JButton getBtnSplit() { return btnSplit; }
     public void setBtnSplit(JButton btnSplit) { this.btnSplit = btnSplit; }
+    
+    
 
     public JPanel getPanelCartasJugador() { return panelCartasJugador; }
     public JPanel getPanelCartasJugador2() { return panelCartasJugador2; }

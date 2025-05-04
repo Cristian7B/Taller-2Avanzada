@@ -7,6 +7,8 @@ package edu.progavud.controller;
 import edu.progavud.model.Carta;
 import edu.progavud.model.Persona;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * Clase encargada de controlar todo el resto de controles,
  * enlaza todo el programa.
@@ -31,6 +33,12 @@ public class ControlPrincipal {
      */
     private ControlMesa controlMesa;
     /**
+     * Variable para manejar la ronda de juego actual. Es 0 si a los jugadores
+     * aún no se les han repartido las cartas y por lo tanto están en la apuesta
+     * inicial.
+     */
+    public static int rondaActual;
+    /**
      * Método constructor que enlaza la comunicación con todos los controles.
      */
     public ControlPrincipal(){
@@ -38,6 +46,7 @@ public class ControlPrincipal {
         controlMesa = new ControlMesa(this);
         controlVista = new ControlVista(this);
         controlMazo = new ControlMazo(this);
+        rondaActual = 0;
         anadirPersonas();
     }
     
@@ -124,6 +133,10 @@ public class ControlPrincipal {
         }
         return apuestaAsegurar;
     }
+    
+    public void apostarEnJugador(int valorNuevoApuesta) {
+        controlMesa.colocarApuestas(valorNuevoApuesta);
+    }
 
     /**
      * Método que sirve para pagarle a una persona, el valor
@@ -133,9 +146,9 @@ public class ControlPrincipal {
      * @param apuesta 
      * @return dinero que se le debe pagar a la persona
      */
-    public int pagarApuesta(int proporcion, int apuesta) {
-        int paga = 0;
-        paga = proporcion*apuesta;
+    public double pagarApuesta(double proporcion, int apuesta) {
+        double paga = 0;
+        paga = (double) apuesta* proporcion;
         return paga;
     }
 
@@ -157,6 +170,13 @@ public class ControlPrincipal {
         boolean ganador;
         ganador = false;
         return ganador;
+    }
+    
+    public int[] obtenerApuestas() {
+        int[] apuestasMesa = new int[2];
+        apuestasMesa[0] = controlMesa.getMesaActual().getApuestasDeLaMesa().get("0");
+        apuestasMesa[1] = controlMesa.getMesaActual().getApuestasDeLaMesa().get("1");
+        return apuestasMesa;
     }
     
     

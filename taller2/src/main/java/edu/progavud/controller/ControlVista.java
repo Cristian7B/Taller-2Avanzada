@@ -47,11 +47,84 @@ public class ControlVista implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         String comando = e.getActionCommand();
-        int contador = 1; //ni contador ni ronda puede ser igual a 0
         switch (comando) {     
-        case "JUGAR":
-            ventanaPrincipal.setVisible(false);
-            ventanaJuego.setVisible(true);
+            case "JUGAR":
+                actualizarEstadoApuestas();
+                ventanaPrincipal.setVisible(false);
+                ventanaJuego.setVisible(true);
+                
+                
+                controlPrincipal.rondaActual = 0;
+                ControlMesa.setContador(0);
+                actualizarEstadoJugador();
+
+                ventanaJuego.mostrarMensaje("Realicen sus apuestas antes de repartir cartas. Al principio solo podrá apostar con una única ficha, o en su defecto hacer AllIn");
+                
+                
+                break;
+
+            case "SALIR":
+                ventanaPrincipal.anuncio("Hasta pronto", "Salir");
+                System.exit(0);
+                break;     
+            case "PEDIR":
+                controlPrincipal.pedir(ControlMesa.getContador());
+                actualizarEstadoJugador();
+                break;
+            case "QUEDARSE":
+                actualizarEstadoJugador();
+                break;
+            case "DIVIDIR":
+                actualizarEstadoJugador();
+                break;
+            case "APOSTAR1":
+                controlPrincipal.apostarEnJugador(1);
+                avanzarRondaSiListo();
+                actualizarEstadoJugador();
+                actualizarEstadoApuestas();
+                break;
+            case "APOSTAR5":
+                controlPrincipal.apostarEnJugador(5);
+                avanzarRondaSiListo();
+                actualizarEstadoJugador();
+                actualizarEstadoApuestas();
+                break;
+            case "APOSTAR10":
+                controlPrincipal.apostarEnJugador(10);
+                avanzarRondaSiListo();
+                actualizarEstadoJugador();
+                actualizarEstadoApuestas();
+                break;
+            case "APOSTAR25":
+                controlPrincipal.apostarEnJugador(25);
+                avanzarRondaSiListo();
+                actualizarEstadoJugador();
+                actualizarEstadoApuestas();
+                break;
+            case "APOSTAR50":
+                controlPrincipal.apostarEnJugador(50);
+                avanzarRondaSiListo();
+                actualizarEstadoJugador();
+                actualizarEstadoApuestas();
+                break;
+            case "ALLIN":
+                controlPrincipal.apostarEnJugador(controlPrincipal.obtenerPersonas()[ControlMesa.getContador()].getDinero());
+                avanzarRondaSiListo();
+                actualizarEstadoJugador();
+                actualizarEstadoApuestas();
+                break;
+
+        }
+                
+    }
+    
+    private void avanzarRondaSiListo() {
+        ControlMesa.setContador(ControlMesa.getContador()+1);
+
+        if (ControlMesa.getContador() == 2 && controlPrincipal.rondaActual == 0) {
+            controlPrincipal.rondaActual = 1;
+            ControlMesa.setContador(0); 
+
             controlPrincipal.repartoInicial(1);
 
             for (int i = 0; i < 3; i++) {
@@ -102,21 +175,29 @@ public class ControlVista implements ActionListener{
                     }
                 }
             }
-            break;
-            case "SALIR":
-                ventanaPrincipal.anuncio("Hasta pronto", "Salir");
-                System.exit(0);
-                break;     
-            case "PEDIR":
-                controlPrincipal.pedir(contador);
-                break;
-            case "QUEDARSE":
-                break;
-            case "DIVIDIR":
-                break;
+
+            ventanaJuego.mostrarMensaje("Se repartieron las cartas. Comienza el juego.");
         }
-                
     }
+    
+    private void actualizarEstadoJugador() {
+        int jugadorActual = ControlMesa.getContador();
+        ventanaJuego.getLabelJugador().setText(controlPrincipal.obtenerPersonas()[jugadorActual].getNombre());
+        ventanaJuego.getLabelDinero().setText("Dinero disponible: $" + String.valueOf(controlPrincipal.obtenerPersonas()[jugadorActual].getDinero()));
+        ventanaJuego.getFondo().revalidate();
+        ventanaJuego.getFondo().repaint();
+    }
+    
+    private void actualizarEstadoApuestas() {
+        int jugadorActual = ControlMesa.getContador();
+        int[] apuestasMesa = controlPrincipal.obtenerApuestas();
+        ventanaJuego.getLabelFichas().setText("Fichas apostadas por " + controlPrincipal.obtenerPersonas()[0].getNombre() + ": $" + String.valueOf(apuestasMesa[0]));
+        ventanaJuego.getLabelFichas2().setText("Fichas apostadas por " + controlPrincipal.obtenerPersonas()[1].getNombre() + ": $" + String.valueOf(apuestasMesa[1]));
+        ventanaJuego.getFondo().revalidate();
+        ventanaJuego.getFondo().repaint();
+    }
+
+
     
     public void asignarOyentes(){
         ventanaPrincipal.getjButton1().setActionCommand("SALIR");
@@ -132,6 +213,21 @@ public class ControlVista implements ActionListener{
         ventanaJuego.btnStay.addActionListener(this);
         ventanaJuego.btnSplit.setActionCommand("DIVIDIR");
         ventanaJuego.btnSplit.addActionListener(this);
+        
+        ventanaJuego.btnFicha1.setActionCommand("APOSTAR1");
+        ventanaJuego.btnFicha5.setActionCommand("APOSTAR5");
+        ventanaJuego.btnFicha10.setActionCommand("APOSTAR10");
+        ventanaJuego.btnFicha25.setActionCommand("APOSTAR25");
+        ventanaJuego.btnFicha50.setActionCommand("APOSTAR50");
+        ventanaJuego.btnAllIn.setActionCommand("ALLIN");
+
+        ventanaJuego.btnFicha1.addActionListener(this);
+        ventanaJuego.btnFicha5.addActionListener(this);
+        ventanaJuego.btnFicha10.addActionListener(this);
+        ventanaJuego.btnFicha25.addActionListener(this);
+        ventanaJuego.btnFicha50.addActionListener(this);
+        ventanaJuego.btnAllIn.addActionListener(this);
+
         
     }
 }
