@@ -6,8 +6,10 @@ package edu.progavud.controller;
 
 import edu.progavud.view.VentanaJuego;
 import edu.progavud.view.VentanaPrincipal;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import javax.swing.JLabel;
 
 /**
@@ -34,7 +36,12 @@ public class ControlVista implements ActionListener{
      */
     public ControlVista(ControlPrincipal controlPrincipal){
         this.controlPrincipal = controlPrincipal;
-        ventanaPrincipal = new VentanaPrincipal(this);
+        try {
+            ventanaPrincipal = new VentanaPrincipal(this); 
+        } catch(IOException e) {
+            // Hay un error.
+        }
+        
         ventanaJuego = new VentanaJuego(this);
         asignarOyentes();
         ControlMesa.setContador(1);
@@ -307,6 +314,7 @@ public class ControlVista implements ActionListener{
         ventanaJuego.getLabelDinero().setText("Dinero disponible: $" + String.valueOf(controlPrincipal.obtenerPersonas()[jugadorActual].getDinero()));
         ventanaJuego.getFondo().revalidate();
         ventanaJuego.getFondo().repaint();
+       
     }
     
     private void actualizarEstadoApuestas() {
@@ -355,5 +363,14 @@ public class ControlVista implements ActionListener{
         
         
     }
+
+    public ControlPrincipal getControlPrincipal() {
+        return controlPrincipal;
+    }
+
+    public void setControlPrincipal(ControlPrincipal controlPrincipal) {
+        this.controlPrincipal = controlPrincipal;
+    }
+    
     
 }

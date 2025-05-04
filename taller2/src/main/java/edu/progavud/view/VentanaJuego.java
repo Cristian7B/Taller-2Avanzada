@@ -210,7 +210,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         panelTurno.add(labelDinero, BorderLayout.SOUTH);
 
         fondo.add(panelTurno);
-        panelTurno.setBounds(20, 20, 200, 60);
+        panelTurno.setBounds(20, 20, 270, 60);
 
         JPanel panelApuesta = new JPanel();
         panelApuesta.setLayout(new BoxLayout(panelApuesta, BoxLayout.Y_AXIS));

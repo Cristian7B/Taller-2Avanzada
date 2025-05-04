@@ -5,7 +5,11 @@
 package edu.progavud.controller;
 
 import edu.progavud.model.Carta;
+import edu.progavud.model.CnxProperties;
+import edu.progavud.model.Crupier;
+import edu.progavud.model.Jugador;
 import edu.progavud.model.Persona;
+import edu.progavud.model.SerializableCrupier;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -39,26 +43,70 @@ public class ControlPrincipal {
      */
     public static int rondaActual;
     /**
+     * Clase conexión con el archivo de propiedades.
+     */
+    private CnxProperties cnxProperties;
+    
+    /**
+     * Atributo que representa la cantidad de jugadores capaces de jugar una 
+     * mesa de Blackjack
+     */
+    private ArrayList<Jugador> personasValidadas;
+    
+    /**
+     * Atributo que representa el crupier, capaz de jugar las 
+     * mesas de Blackjack
+     */
+    private Crupier crupierInformacion;
+    
+    /**
+     * Objeto para poder hacer la serialización del crupier.
+     */
+    private SerializableCrupier serializableCrupier;
+    /**
      * Método constructor que enlaza la comunicación con todos los controles.
      */
     public ControlPrincipal(){
         controlPersona = new ControlPersona(this);
-        controlMesa = new ControlMesa(this);
+        serializableCrupier = new SerializableCrupier();
         controlVista = new ControlVista(this);
         controlMazo = new ControlMazo(this);
         rondaActual = 0;
-        anadirPersonas();
+        controlMesa = new ControlMesa(this, personasValidadas, crupierInformacion);
+        
     }
     
-    /**
-     * Método para añadir personas a la mesa por medio del array personas.
-     * Se crea la persona desde controlPersona y de pasa a controlMesa.
-     */    
-    public void anadirPersonas() {
-        for(int i = 0; i < 3; i++) {
-            controlMesa.agregarJugadorMesa(controlPersona.crearJugadorMesa(i), i);
+    public void crearPersonasValidadas(ArrayList<ArrayList<String>> personasPropiedades) {
+        personasValidadas = new ArrayList<>();
+
+        for (int i = 0; i < personasPropiedades.size(); i++) {
+            ArrayList<String> props = personasPropiedades.get(i);
+            int dinero = Integer.parseInt(props.get(3));
+            if (dinero > 0) {
+                String nombre = props.get(0);
+                String apellido = props.get(1);
+                String cedula = props.get(2);
+                String direccion = props.get(4);
+                String telefono = props.get(5);
+                personasValidadas.add(controlPersona.crearJugadorMesa(nombre, apellido, cedula, dinero, direccion, telefono));
+            }
         }
     }
+    
+    public void crearCrupier(ArrayList<String> informacionCrupier) {
+        if (serializableCrupier.archivoExiste()) {
+            crupierInformacion = (Crupier) serializableCrupier.leerArchivoSerializado();
+        } else {
+            crupierInformacion = controlPersona.crearCrupier(
+                informacionCrupier.get(0),
+                informacionCrupier.get(1),
+                informacionCrupier.get(2),
+                Integer.parseInt(informacionCrupier.get(3))
+            );
+            serializableCrupier.escribirArchivoSerializado(crupierInformacion);
+        }
+    }
+
     
     /**
      * Método que une la persona que pidió con la carta con la nueva carta.
@@ -212,6 +260,7 @@ public class ControlPrincipal {
         return proporcion;
     }
     
+    
     public int[] obtenerApuestas() {
         int[] apuestasMesa = new int[2];
         apuestasMesa[0] = controlMesa.getMesaActual().getApuestasDeLaMesa().get("0");
@@ -219,6 +268,12 @@ public class ControlPrincipal {
         return apuestasMesa;
     }
     
+    /**
+     * Método para recuperar la ruta al archivo de propiedades de la vista.
+     */
+    public void recuperarPath(String path) {
+        cnxProperties = new CnxProperties(path, this);
+    } 
     public void moverPersonasAlFinal(){
         controlMesa.setPersonas(controlPersona.moverPersonasAlFinal()) ;
     }
