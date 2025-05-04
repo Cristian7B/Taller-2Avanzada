@@ -31,22 +31,35 @@ public class ControlPersona {
     
     /**
      * Método para instanciar y añadir los jugadores a la mesa
-     * @param i, número del jugador. Objetivo: Verificar que no sea crupier
-     * @return personaAAgregar, objeto Persona a añadir
+     * @param atributos del jugador. Objetivo: Verificar que no sea crupier
+     * @return jugador, objeto Jugador a añadir
      */
-    public Persona crearJugadorMesa(int i) {
-        Persona personaAAgregar;
-
-        if (i == 0) {
-            personaAAgregar = new Jugador("Juan", "Pérez", "12345678", 100, "Calle Falsa 123", "555-1234", 10230120);
-        } else if (i == 1) {
-            personaAAgregar = new Jugador("Ana", "Gómez", "87654321", 100, "Avenida Siempre Viva 742", "555-5678", 1231230);
-        } else {
-            personaAAgregar = new Crupier("Carlos", "Ramírez", "99999999", 100);
-        }
-
-        return personaAAgregar;
+    public Jugador crearJugadorMesa(
+        String nombre,
+        String apellido,
+        String cedula,
+        int dinero,
+        String direccion,
+        String telefono
+    ) {
+        return new Jugador(nombre, apellido, cedula, dinero, direccion, telefono);
     }
+    
+        /**
+     * Método para instanciar el crupier a la mesa
+     * @param atributos del crupier
+     * @return crupier, objeto Crupier a añadir
+     */
+    public Crupier crearCrupier(
+        String nombre,
+        String apellido,
+        String cedula,
+        int dinero
+    ) {
+        return new Crupier(nombre, apellido, cedula, dinero);
+    }
+
+
 
     public ControlPrincipal getControlPrincipal() {
         return controlPrincipal;
