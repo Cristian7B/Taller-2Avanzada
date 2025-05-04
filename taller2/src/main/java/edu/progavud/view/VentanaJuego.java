@@ -20,10 +20,12 @@ public class VentanaJuego extends javax.swing.JFrame {
     private JLabel labelFichas2;
     private JLabel labelDinero;
 
+    public JButton btnAsegurar;
     public JButton btnHit;
     public JButton btnDouble;
     public JButton btnStay;
     public JButton btnSplit;
+    public JButton btnSiguienteRonda;
     
     public JButton btnFicha1;
     public JButton btnFicha5;
@@ -131,7 +133,16 @@ public class VentanaJuego extends javax.swing.JFrame {
         Color colorFondoBoton = new Color(0xAB3428);
         Color colorTexto = new Color(0xF5EE9E);
 
-        btnHit = new JButton("Hit");
+        btnAsegurar = new JButton("Asegurar");
+        btnAsegurar.setBackground(colorFondoBoton);
+        btnAsegurar.setForeground(colorTexto);
+        btnAsegurar.setFont(fuenteBoton);
+        btnAsegurar.setPreferredSize(new Dimension(100, 40));
+        btnAsegurar.setFocusPainted(false);
+        btnAsegurar.setBorder(null);
+
+
+        btnHit = new JButton("Pedir");
         btnHit.setBackground(colorFondoBoton);
         btnHit.setForeground(colorTexto);
         btnHit.setFont(fuenteBoton);
@@ -139,7 +150,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnHit.setFocusPainted(false);
         btnHit.setBorder(null);
 
-        btnDouble = new JButton("Double");
+        btnDouble = new JButton("Doblar");
         btnDouble.setBackground(colorFondoBoton);
         btnDouble.setForeground(colorTexto);
         btnDouble.setFont(fuenteBoton);
@@ -147,7 +158,7 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnDouble.setFocusPainted(false);
         btnDouble.setBorder(null);
 
-        btnStay = new JButton("Stay");
+        btnStay = new JButton("Quedarse");
         btnStay.setBackground(colorFondoBoton);
         btnStay.setForeground(colorTexto);
         btnStay.setFont(fuenteBoton);
@@ -155,17 +166,28 @@ public class VentanaJuego extends javax.swing.JFrame {
         btnStay.setFocusPainted(false);
         btnStay.setBorder(null);
 
-        btnSplit = new JButton("Split");
+        btnSplit = new JButton("Dividir");
         btnSplit.setBackground(colorFondoBoton);
         btnSplit.setForeground(colorTexto);
         btnSplit.setFont(fuenteBoton);
         btnSplit.setPreferredSize(new Dimension(100, 40));
         btnSplit.setFocusPainted(false);
         btnSplit.setBorder(null);
+        
+        btnSiguienteRonda = new JButton("Siguiente partida");
+        btnSiguienteRonda.setBackground(colorFondoBoton);
+        btnSiguienteRonda.setForeground(colorTexto);
+        btnSiguienteRonda.setFont(fuenteBoton);
+        btnSiguienteRonda.setPreferredSize(new Dimension(160, 40)); // Un poco más ancho por el texto
+        btnSiguienteRonda.setFocusPainted(false);
+        btnSiguienteRonda.setBorder(null);
+
+        panelBotones.add(btnAsegurar); 
         panelBotones.add(btnHit);
         panelBotones.add(btnDouble);
         panelBotones.add(btnStay);
         panelBotones.add(btnSplit);
+        panelBotones.add(btnSiguienteRonda);
 
         panelSur.add(panelBotones);
         panelBase.add(panelSur, BorderLayout.SOUTH);

@@ -56,8 +56,6 @@ public class ControlMesa {
         crupierGeneral = crupierInformacion;
         this.controlPrincipal = controlPrincipal;
         int cantidadMesas = jugadores.size()/2;
-        System.out.println(cantidadMesas);
-        
         numMesaActual = 0;
 
         for (int i = 0; i < cantidadMesas; i++) {
@@ -83,11 +81,11 @@ public class ControlMesa {
      */
     public boolean verificarDoblar() {
         boolean verificador = false;
-        Integer valor = mesasPosibles.get(numMesaActual).getApuestasDeLaMesa().get(String.valueOf(contador));
+        Integer valor = mesasPosibles.get(numMesaActual).getApuestasDeLaMesa().get(String.valueOf(contador-1));
 
-        if (valor != 0) {
+        if (mesasPosibles.get(numMesaActual).getPersonas()[contador-1].getMano().size() == 2) {
             verificador = true;
-            mesasPosibles.get(numMesaActual).getApuestasDeLaMesa().put(String.valueOf(contador), valor * 2);
+            mesasPosibles.get(numMesaActual).getApuestasDeLaMesa().put(String.valueOf(contador-1), valor * 2);
         }
 
         return verificador;
@@ -147,13 +145,13 @@ public class ControlMesa {
      * Verifica si una persona puede ser ganadora debido a la suma de sus cartas
      * y hace el proceso de hallar el ganador comparando cada mano del jugador
      * con la del crupier.
-     * @return 0 sino es ganador, 1 si empataron, 2 si gano
+     * @return 0 si perdio, 1 si empataron, 2 si gano
      */
     public int verificarGanador(){
         int sumaCartasJugador = 0;
         int sumaCartasCrupier = 0;
         int ganador = 0;
-        for (int i=0; i < mesasPosibles.get(numMesaActual).getPersonas()[contador].getMano().size(); i++){
+        for (int i=0; i < mesasPosibles.get(numMesaActual).getPersonas()[contador-1].getMano().size(); i++){
             sumaCartasJugador = sumaCartasJugador + mesasPosibles.get(numMesaActual).getPersonas()[contador].getMano().get(i).getValorInterno();
         }
         for (int i=0; i < mesasPosibles.get(numMesaActual).getPersonas()[3].getMano().size(); i++){  //suponiendo que el contador 3 es el del crupier
@@ -291,6 +289,10 @@ public class ControlMesa {
     public Persona[] getPersonas() {
         return mesasPosibles.get(numMesaActual).getPersonas();
     }
+    
+    public void setPersonas(Persona[] personas){
+        mesasPosibles.get(numMesaActual).setPersonas(personas);
+    }
 
     /**
      * Método para obtener el valor actual del contador de jugadores.
@@ -337,7 +339,7 @@ public class ControlMesa {
     }
 
     
-  
+    
     
 
 }

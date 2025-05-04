@@ -96,6 +96,7 @@ public abstract class Persona implements Serializable{
      */
     public abstract int pedirCarta();
     
+    
 
     public String getNombre() {
         return nombre;

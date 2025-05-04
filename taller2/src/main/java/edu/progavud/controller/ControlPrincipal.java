@@ -115,7 +115,26 @@ public class ControlPrincipal {
      * @param contador contador que apunta a una persona
      */
     public void pedir(int contador){
-        controlMesa.getPersonaParaModificar(contador).getMano().add(controlMazo.getRandomCarta());
+        contador = contador;
+        int sumaCrupier = 0;
+        for (int i=0; i< controlMesa.getPersonaParaModificar(3).getMano().size(); i++){
+            sumaCrupier = sumaCrupier + controlMesa.getPersonaParaModificar(3).getMano().get(i).getValorInterno();
+        }
+        if (contador == 3 ){
+            while (true){
+                if (sumaCrupier < 17){
+                    
+                    controlMesa.getPersonaParaModificar(contador).getMano().add(controlMazo.getRandomCarta());
+                    int i = controlMesa.getPersonaParaModificar(contador).getMano().size()-1;
+                    sumaCrupier = sumaCrupier + controlMesa.getPersonaParaModificar(contador).getMano().get(i).getValorInterno();
+                }
+                if (sumaCrupier >= 17){
+                    break;
+                }
+            }
+        }else {
+            controlMesa.getPersonaParaModificar(contador).getMano().add(controlMazo.getRandomCarta());
+        }
     }
     
     /**
@@ -176,14 +195,16 @@ public class ControlPrincipal {
      * si su primera carta es un as. se paga 2 a 1.
      * Se puede apostar como maximo, la mitad de lo que aposto
      * en la apuesta inicial.
-     * return valor que asegura, que por predeterminado siempre sera la mitad de la apuesta inicial
+     * return proporcion de la apuesta
      */
     public int asegurar() {
-        int apuestaAsegurar = 0;
+        int proporcion = 0;
         if(controlMesa.verificarAsegurar()){
-            apuestaAsegurar = (controlMesa.getMesaActual().getApuestasDeLaMesa().get(String.valueOf(ControlMesa.getContador())))/2;
+            proporcion = 1/2;
+        }else{
+            proporcion = -1/2;
         }
-        return apuestaAsegurar;
+        return proporcion;
     }
     
     public void apostarEnJugador(int valorNuevoApuesta) {
@@ -212,20 +233,34 @@ public class ControlPrincipal {
         ControlMesa.setContador(ControlMesa.getContador()+1);
     }
 
+    /**
+     * Método que retorna la proporción para posteriormente pagar el blackjack
+     * @return proporcion
+     */
+    public int blackJack(){
+        int proporcion = 0;
+        if (controlMesa.verificarBlackJack()){
+            proporcion = 1/2;
+        }
+        return proporcion;
+    }
 
     /**
      * Método que modifica el atributo ganador de la persona
+     * @return proporcion que será llamada en el metodo pagar apuesta
      */
-    public void hallarGanador() {
+    public int hallarGanador() {
+        int proporcion = 0;
         controlMesa.getPersonaParaModificar(ControlMesa.getContador()).setGanador(controlMesa.verificarGanador());
+        if (controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getGanador()==0){
+            proporcion = -1;
+        }else if (controlMesa.getPersonaParaModificar(ControlMesa.getContador()).getGanador()==2){
+            proporcion = 1;
+        }
+        return proporcion;
     }
     
     
-    /**
-     * Método para obtener las apuestas de los jugadores para mostrar las apuestas
-     * totales en la vista.
-     * @return apuestasMesa, arreglo con las apuestas totales de los jugadores
-     */
     public int[] obtenerApuestas() {
         int[] apuestasMesa = new int[2];
         apuestasMesa[0] = controlMesa.getMesaActual().getApuestasDeLaMesa().get("0");
@@ -239,6 +274,8 @@ public class ControlPrincipal {
     public void recuperarPath(String path) {
         cnxProperties = new CnxProperties(path, this);
     } 
-    
+    public void moverPersonasAlFinal(){
+        controlMesa.setPersonas(controlPersona.moverPersonasAlFinal()) ;
+    }
 
 }
