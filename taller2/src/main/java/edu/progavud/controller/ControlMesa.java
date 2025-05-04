@@ -32,7 +32,7 @@ public class ControlMesa {
      * Es decir, el número del jugador actual. 
      * Este contador jamás será 0.
      */
-    private static int contador;
+    public static int contador;
 
     /**
      * Constructor de la clase ControlMesa.
@@ -70,11 +70,11 @@ public class ControlMesa {
      */
     public boolean verificarDoblar() {
         boolean verificador = false;
-        Integer valor = mesaActual.getApuestasDeLaMesa().get(String.valueOf(contador));
+        Integer valor = mesaActual.getApuestasDeLaMesa().get(String.valueOf((contador-1)%2));
 
         if (valor != 0) {
             verificador = true;
-            mesaActual.getApuestasDeLaMesa().put(String.valueOf(contador), valor * 2);
+            mesaActual.getApuestasDeLaMesa().put(String.valueOf((contador-1)%2), valor * 2);
         }
 
         return verificador;
@@ -88,10 +88,10 @@ public class ControlMesa {
      */
     public boolean verificarDividir() {
         boolean verificador = false;
-        int valorCarta1 = mesaActual.getPersonas()[contador].getMano().get(0).getValorInterno();
-        int valorCarta2 = mesaActual.getPersonas()[contador].getMano().get(1).getValorInterno();
+        int valorCarta1 = mesaActual.getPersonas()[contador-1].getMano().get(0).getValorInterno();
+        int valorCarta2 = mesaActual.getPersonas()[contador-1].getMano().get(1).getValorInterno();
 
-        if ((valorCarta1 == valorCarta2) && mesaActual.getPersonas()[contador].getMano().size() == 2) {
+        if ((valorCarta1 == valorCarta2) && mesaActual.getPersonas()[contador-1].getMano().size() == 2) {
             verificador = true;
         }
 
@@ -118,10 +118,10 @@ public class ControlMesa {
      */
     public boolean verificarBlackJack(){
         boolean verificador = false;
-        if (mesaActual.getPersonas()[contador].getMano().size() == 2){
+        if (mesaActual.getPersonas()[contador-1].getMano().size() == 2){
             int sumaCartas = 0;
-            for (int i=0; i < mesaActual.getPersonas()[contador].getMano().size(); i++){
-                sumaCartas = sumaCartas + mesaActual.getPersonas()[contador].getMano().get(i).getValorInterno();
+            for (int i=0; i < mesaActual.getPersonas()[contador-1].getMano().size(); i++){
+                sumaCartas = sumaCartas + mesaActual.getPersonas()[contador-1].getMano().get(i).getValorInterno();
             }
             if (sumaCartas == 21){
                 verificador = true;
@@ -140,11 +140,11 @@ public class ControlMesa {
         int sumaCartasJugador = 0;
         int sumaCartasCrupier = 0;
         int ganador = 0;
-        for (int i=0; i < mesaActual.getPersonas()[contador].getMano().size(); i++){
-            sumaCartasJugador = sumaCartasJugador + mesaActual.getPersonas()[contador].getMano().get(i).getValorInterno();
+        for (int i=0; i < mesaActual.getPersonas()[contador-1].getMano().size(); i++){
+            sumaCartasJugador = sumaCartasJugador + mesaActual.getPersonas()[contador-1].getMano().get(i).getValorInterno();
         }
-        for (int i=0; i < mesaActual.getPersonas()[3].getMano().size(); i++){  //suponiendo que el contador 3 es el del crupier
-            sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[3].getMano().get(i).getValorInterno();
+        for (int i=0; i < mesaActual.getPersonas()[2].getMano().size(); i++){  //suponiendo que el contador 2 es el del crupier
+            sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[2].getMano().get(i).getValorInterno();
         }
         if (sumaCartasJugador <= 21 && sumaCartasCrupier <= 21){
             if (sumaCartasJugador < sumaCartasCrupier){
@@ -171,10 +171,13 @@ public class ControlMesa {
         if (contador % 2 == 0 && mesaActual.getPersonas()[0].getDinero() >= apuesta) {
             mesaActual.getApuestasDeLaMesa().put(String.valueOf(0), mesaActual.getApuestasDeLaMesa().get(String.valueOf(0)) + apuesta);   //Jugador dos
             mesaActual.getPersonas()[contador].setDinero(mesaActual.getPersonas()[0].getDinero()-apuesta);
+            contador++;
         } else if (contador % 2 == 1 && mesaActual.getPersonas()[1].getDinero() >= apuesta) {
             mesaActual.getApuestasDeLaMesa().put(String.valueOf(1), mesaActual.getApuestasDeLaMesa().get(String.valueOf(1)) + apuesta);   //Jugador uno porque contador nunca sera 0
             mesaActual.getPersonas()[contador].setDinero(mesaActual.getPersonas()[1].getDinero()-apuesta);
+            contador++;
         }
+        // contador++;
     }
     
     /**

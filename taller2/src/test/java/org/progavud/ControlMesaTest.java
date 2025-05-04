@@ -2,6 +2,7 @@ package org.progavud;
 import static org.junit.jupiter.api.Assertions.*;
 
 import edu.progavud.controller.ControlMesa;
+import edu.progavud.model.Carta;
 import edu.progavud.model.Crupier;
 import edu.progavud.model.Jugador;
 import edu.progavud.model.Persona;
@@ -24,6 +25,7 @@ public class ControlMesaTest {
                     instance.agregarJugadorMesa(jugador1, 0);
                     instance.agregarJugadorMesa(jugador2, 1);
                     instance.agregarJugadorMesa(crupier, 2);
+
           }
 
           @org.junit.jupiter.api.AfterAll
@@ -43,9 +45,12 @@ public class ControlMesaTest {
 
           @org.junit.jupiter.api.Test
           public void colocarApuestasTest(){
-                    instance.colocarApuestas(25000);
-                    instance.colocarApuestas(300000000);
-                    assertEquals(instance.getMesaActual().getApuestasDeLaMesa(),300025000);
+                    instance.colocarApuestas(300000);
+                    instance.colocarApuestas(40000);
+                    /*ya que segun las reglas de negocio, solo se pueden hacer aumentos con un valor 
+                    numerico definido o todo el dinero que tenga el jugador, no es necesario evaluar el 
+                    caso en el que se supere el dinero que posee el jugador.*/ 
+                    assertEquals(340000,instance.getMesaActual().getApuestasDeLaMesa().get("0")+instance.getMesaActual().getApuestasDeLaMesa().get("1")); 
           }
 
           @org.junit.jupiter.api.Test
@@ -64,8 +69,74 @@ public class ControlMesaTest {
 
           @org.junit.jupiter.api.Test
           public void  verificarDoblarTest(){
-
+                    instance.colocarApuestas(300000);
                     instance.verificarDoblar();
+                    assertEquals(600000,instance.getMesaActual().getApuestasDeLaMesa().get("0"));
+
+                    instance.colocarApuestas(40000);
+                    instance.verificarDoblar();
+                    assertEquals(80000,instance.getMesaActual().getApuestasDeLaMesa().get("1"));
           }
 
+          @org.junit.jupiter.api.Test
+          public void verificarDividirTest(){
+                    instance.colocarApuestas(300000);
+                    instance.getMesaActual().getPersonas()[0].getMano().add(new Carta("PICA", 10));
+                    instance.getMesaActual().getPersonas()[0].getMano().add(new Carta("TREBOL",10));
+                    assertTrue(instance.verificarDividir());
+
+                    instance.colocarApuestas(40000);
+                    instance.getMesaActual().getPersonas()[1].getMano().add(new Carta("CORAZON",10));
+                    instance.getMesaActual().getPersonas()[1].getMano().add(new Carta("DIAMANTE",2));
+                    assertFalse(instance.verificarDividir());
+          }
+
+          @org.junit.jupiter.api.Test
+          public void verificarAsegurarTest(){
+                    instance.getMesaActual().getPersonas()[2].getMano().add(new Carta("PICA",11));
+                    instance.getMesaActual().getPersonas()[2].getMano().add(new Carta("TREBOL",10)) ;
+                    assertTrue(instance.verificarAsegurar());
+
+                    instance.getMesaActual().getPersonas()[2].getMano().set(1,new Carta("CORAZON",5));
+                    assertFalse(instance.verificarAsegurar());
+          }
+
+          @org.junit.jupiter.api.Test
+          public void verificarBlackJackTest(){
+                    instance.colocarApuestas(300000);
+                    instance.getMesaActual().getPersonas()[0].getMano().add(new Carta("PICA",10));
+                    instance.getMesaActual().getPersonas()[0].getMano().add(new Carta("TREBOL",11));
+                    assertTrue(instance.verificarBlackJack());
+
+                    instance.colocarApuestas(40000);
+                    instance.getMesaActual().getPersonas()[1].getMano().add(new Carta("CORAZON",10));
+                    instance.getMesaActual().getPersonas()[1].getMano().add(new Carta("DIAMANTE",6));
+                    assertFalse(instance.verificarBlackJack());
+
+          }
+
+          @org.junit.jupiter.api.Test
+          public void verificarGanadorTest(){
+                    instance.colocarApuestas(300000);
+                    instance.getMesaActual().getPersonas()[0].getMano().add(new Carta("PICA",10));
+                    instance.getMesaActual().getPersonas()[0].getMano().add(new Carta("TREBOL",11));
+
+                    instance.getMesaActual().getPersonas()[2].getMano().add(new Carta("PICA",5));
+                    instance.getMesaActual().getPersonas()[2].getMano().add(new Carta("TREBOL",11)) ;
+                    assertEquals(2,instance.verificarGanador());
+                    
+                    instance.getMesaActual().getPersonas()[0].getMano().set(0,new Carta("CORAZON",5));
+                    assertEquals(1, instance.verificarGanador());
+
+                    instance.colocarApuestas(40000);
+                    instance.getMesaActual().getPersonas()[1].getMano().add(new Carta("DIAMANTE",4));
+                    instance.getMesaActual().getPersonas()[1].getMano().add(new Carta("PICA",11));
+                    assertEquals(0, instance.verificarGanador());
+
+          }
+
+          @org.junit.jupiter.api.Test
+          public void asegurarGanadorTest(){
+                    
+          }
 }
