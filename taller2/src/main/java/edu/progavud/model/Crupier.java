@@ -4,6 +4,7 @@
  */
 package edu.progavud.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  * 
  * @author Nicolas Velasco
  */
-public class Crupier extends Persona {
+public class Crupier extends Persona implements Serializable {
 
     /**
      * Método constructor de la clase

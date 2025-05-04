@@ -22,17 +22,12 @@ public class Jugador extends Persona {
      */
     private String telefono;
     /**
-     * Apuesta inicial que realizará el jugador
-     */
-    private int apuesta;
-    /**
      * Método constructor que solamente inicializa los atributos
      */
     public Jugador(){
         super();
         direccion = "";
         telefono = "";
-        apuesta = 0;
     }
     /**
      * Método constructor completo de la clase
@@ -42,13 +37,11 @@ public class Jugador extends Persona {
      * @param dinero    dinero del jugador
      * @param direccion direccion del jugador
      * @param telefono  telefono del jugador
-     * @param apuesta   apuesta inicial del jugador
      */
-    public Jugador(String nombre, String apellido, String cedula, int dinero, String direccion, String telefono, int apuesta){
+    public Jugador(String nombre, String apellido, String cedula, int dinero, String direccion, String telefono){
         super(nombre, apellido, cedula, dinero);
         this.direccion = direccion;
         this.telefono = telefono;
-        this.apuesta = apuesta;
     }
     /**
      * Método heredado de la clase Persona, calcula el dinero de los jugadores,
