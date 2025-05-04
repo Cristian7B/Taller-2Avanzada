@@ -216,14 +216,14 @@ public class ControlMesa {
         int sumaMano1 = 0;
         int sumaMano2 = 0;
         int sumaCartasCrupier = 0;
-        for (int i=0; i < mesaActual.getPersonas()[3].getMano().size(); i++){  //suponiendo que el contador 3 es el del crupier
-            sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[3].getMano().get(i).getValorInterno();
+        for (int i=0; i < mesaActual.getPersonas()[2].getMano().size(); i++){  //suponiendo que el contador 2 es el del crupier
+            sumaCartasCrupier = sumaCartasCrupier + mesaActual.getPersonas()[2].getMano().get(i).getValorInterno();
         }
-        for (int i = 0; i< mesaActual.getPersonas()[contador].getManoDividida().get(0).size(); i++){
-            sumaMano1 = sumaMano1 + mesaActual.getPersonas()[contador].getManoDividida().get(0).get(i).getValorInterno();
+        for (int i = 0; i< mesaActual.getPersonas()[contador-1].getManoDividida().get(0).size(); i++){
+            sumaMano1 = sumaMano1 + mesaActual.getPersonas()[contador-1].getManoDividida().get(0).get(i).getValorInterno();
         }
-        for (int i = 0; i< mesaActual.getPersonas()[contador].getManoDividida().get(1).size(); i++){
-            sumaMano2 = sumaMano2 + mesaActual.getPersonas()[contador].getManoDividida().get(1).get(i).getValorInterno();
+        for (int i = 0; i< mesaActual.getPersonas()[contador-1].getManoDividida().get(1).size(); i++){
+            sumaMano2 = sumaMano2 + mesaActual.getPersonas()[contador-1].getManoDividida().get(1).get(i).getValorInterno();
         }
         if (sumaCartasCrupier <= 21){
             if (sumaMano1 <= 21 && sumaMano2 <= 21){ //cumple ambas
