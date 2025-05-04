@@ -37,6 +37,7 @@ public class ControlVista implements ActionListener{
         ventanaPrincipal = new VentanaPrincipal(this);
         ventanaJuego = new VentanaJuego(this);
         asignarOyentes();
+        ControlMesa.setContador(1);
     }
     int proporcionAsegurar = 0;
     /**
@@ -57,12 +58,16 @@ public class ControlVista implements ActionListener{
 
 
                     controlPrincipal.rondaActual = 1;
-                    ControlMesa.setContador(1);
+                    ControlMesa.setContador(0);
                     actualizarEstadoJugador();
 
                     ventanaJuego.mostrarMensaje("Realicen sus apuestas antes de repartir cartas. Al principio solo podrá apostar con una única ficha, o en su defecto hacer AllIn");
 
-
+                    ventanaJuego.btnAsegurar.setVisible(false);
+                    ventanaJuego.btnDouble.setVisible(false);
+                    ventanaJuego.btnHit.setVisible(false);
+                    ventanaJuego.btnSplit.setVisible(false);
+                    ventanaJuego.btnStay.setVisible(false);
                     break;
 
                 case "SALIR":
@@ -76,6 +81,8 @@ public class ControlVista implements ActionListener{
                     }else{
                         ventanaPrincipal.anuncio("No puedes asegurar porque la primera carta del crupier debe ser un as", "CRUPIER");
                     }
+                    actualizarEstadoJugador();
+                    actualizarEstadoApuestas();
                     
                     break;
                 case "PEDIR1":
@@ -132,7 +139,6 @@ public class ControlVista implements ActionListener{
                 case "DIVIDIR":
                     actualizarEstadoJugador();
                     break;
-                
                 case "APOSTAR1":
                     controlPrincipal.apostarEnJugador(1);
                     avanzarRondaSiListo();
@@ -169,9 +175,9 @@ public class ControlVista implements ActionListener{
                     actualizarEstadoJugador();
                     actualizarEstadoApuestas();
                     break;
+                
             }
-        }else{
-            
+        }else{           
             switch (comando){
                 case "SIGUIENTE":
                     controlPrincipal.moverPersonasAlFinal();
@@ -230,7 +236,7 @@ public class ControlVista implements ActionListener{
     private void avanzarRondaSiListo() {
         ControlMesa.setContador(ControlMesa.getContador()+1);
 
-        if (ControlMesa.getContador() == 3 && controlPrincipal.rondaActual == 1) {
+        if (ControlMesa.getContador() == 2 && controlPrincipal.rondaActual == 1) {
             controlPrincipal.rondaActual = 2;
             ControlMesa.setContador(1); 
 
@@ -286,14 +292,19 @@ public class ControlVista implements ActionListener{
             }
 
             ventanaPrincipal.anuncio("No va mas, queda cerrado el acceso a otros jugadores.", "CRUPIER");
+            ventanaJuego.btnAsegurar.setVisible(true);
+            ventanaJuego.btnDouble.setVisible(true);
+            ventanaJuego.btnHit.setVisible(true);
+            ventanaJuego.btnSplit.setVisible(true);
+            ventanaJuego.btnStay.setVisible(true);
             ControlMesa.setContador(1);
         }
     }
     
     private void actualizarEstadoJugador() {
         int jugadorActual = ControlMesa.getContador();
-        ventanaJuego.getLabelJugador().setText(controlPrincipal.obtenerPersonas()[jugadorActual-1].getNombre());
-        ventanaJuego.getLabelDinero().setText("Dinero disponible: $" + String.valueOf(controlPrincipal.obtenerPersonas()[jugadorActual-1].getDinero()));
+        ventanaJuego.getLabelJugador().setText(controlPrincipal.obtenerPersonas()[jugadorActual].getNombre());
+        ventanaJuego.getLabelDinero().setText("Dinero disponible: $" + String.valueOf(controlPrincipal.obtenerPersonas()[jugadorActual].getDinero()));
         ventanaJuego.getFondo().revalidate();
         ventanaJuego.getFondo().repaint();
     }
